@@ -1148,18 +1148,15 @@ class BaseHtml
     /**
      * Generates a summary of the validation errors.
      * If there is no validation error, an empty error summary markup will still be generated, but it will be hidden.
-     * @param Model|Model[] $models the model(s) whose validation errors are to be displayed.
+     * @param Model|Model[] $models the model(s) whose validation errors are to be displayed
      * @param array $options the tag options in terms of name-value pairs. The following options are specially handled:
      *
      * - header: string, the header HTML for the error summary. If not set, a default prompt string will be used.
-     * - footer: string, the footer HTML for the error summary. Defaults to empty string.
-     * - encode: boolean, if set to false then the error messages won't be encoded. Defaults to `true`.
-     * - showAllErrors: boolean, if set to true every error message for each attribute will be shown otherwise
-     * only the first error message for each attribute will be shown. Defaults to `false`.
-     * Option is available since 2.0.10.
+     * - footer: string, the footer HTML for the error summary.
+     * - encode: boolean, if set to false then the error messages won't be encoded.
      *
-     * The rest of the options will be rendered as the attributes of the container tag.
-     *
+     * The rest of the options will be rendered as the attributes of the container tag. The values will
+     * be HTML-encoded using [[encode()]]. If a value is null, the corresponding attribute will not be rendered.
      * @return string the generated error summary
      */
     public static function errorSummary($models, $options = [])
@@ -1167,7 +1164,6 @@ class BaseHtml
         $header = isset($options['header']) ? $options['header'] : '<p>' . Yii::t('yii', 'Please fix the following errors:') . '</p>';
         $footer = ArrayHelper::remove($options, 'footer', '');
         $encode = ArrayHelper::remove($options, 'encode', true);
-        $showAllErrors = ArrayHelper::remove($options, 'showAllErrors', false);
         unset($options['header']);
 
         $lines = [];
@@ -1176,16 +1172,8 @@ class BaseHtml
         }
         foreach ($models as $model) {
             /* @var $model Model */
-            foreach ($model->getErrors() as $errors) {
-                foreach ($errors as $error) {
-                    $line = $encode ? Html::encode($error) : $error;
-                    if (array_search($line, $lines) === false) {
-                        $lines[] = $line;
-                    }
-                    if (!$showAllErrors) {
-                        break;
-                    }
-                }
+            foreach ($model->getFirstErrors() as $error) {
+                $lines[] = $encode ? Html::encode($error) : $error;
             }
         }
 
@@ -1660,7 +1648,7 @@ class BaseHtml
     protected static function activeListInput($type, $model, $attribute, $items, $options = [])
     {
         $name = isset($options['name']) ? $options['name'] : static::getInputName($model, $attribute);
-        $selection = isset($options['value']) ? $options['value'] : static::getAttributeValue($model, $attribute);
+        $selection = static::getAttributeValue($model, $attribute);
         if (!array_key_exists('unselect', $options)) {
             $options['unselect'] = '';
         }
@@ -2043,7 +2031,7 @@ class BaseHtml
         }
         $attribute = $matches[2];
         $value = $model->$attribute;
-        if ($matches[3] !== '' && $matches[3] !== '[]') {
+        if ($matches[3] !== '') {
             foreach (explode('][', trim($matches[3], '[]')) as $id) {
                 if ((is_array($value) || $value instanceof \ArrayAccess) && isset($value[$id])) {
                     $value = $value[$id];

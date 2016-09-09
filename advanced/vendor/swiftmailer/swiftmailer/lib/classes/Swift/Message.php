@@ -92,7 +92,7 @@ class Swift_Message extends Swift_Mime_SimpleMessage
     }
 
     /**
-     * Detach a signature handler from a message.
+     * Attach a new signature handler to the message.
      *
      * @param Swift_Signer $signer
      *

@@ -262,12 +262,9 @@ Each of the generator properties (like `name`, `address`, and `lorem`) are calle
     imageUrl($width = 640, $height = 480) // 'http://lorempixel.com/640/480/'
     imageUrl($width, $height, 'cats')     // 'http://lorempixel.com/800/600/cats/'
     imageUrl($width, $height, 'cats', true, 'Faker') // 'http://lorempixel.com/800/400/cats/Faker'
-    imageUrl($width, $height, 'cats', true, 'Faker', true) // 'http://lorempixel.com/grey/800/400/cats/Faker/' Monochrome image
     image($dir = '/tmp', $width = 640, $height = 480) // '/tmp/13b73edae8443990be1aa8f1a483bc27.jpg'
     image($dir, $width, $height, 'cats')  // 'tmp/13b73edae8443990be1aa8f1a483bc27.jpg' it's a cat!
-    image($dir, $width, $height, 'cats', false) // '13b73edae8443990be1aa8f1a483bc27.jpg' it's a filename without path
-    image($dir, $width, $height, 'cats', true, false) // it's a no randomize images (default: `true`)
-    image($dir, $width, $height, 'cats', true, true, 'Faker') // 'tmp/13b73edae8443990be1aa8f1a483bc27.jpg' it's a cat with 'Faker' text. Default, `null`.
+    image($dir, $width, $height, 'cats', true, 'Faker') // 'tmp/13b73edae8443990be1aa8f1a483bc27.jpg' it's a cat with Faker text
 
 ### `Faker\Provider\Uuid`
 
@@ -750,14 +747,6 @@ echo $faker->nationalIdNumber // Citizen ID number
 echo $faker->foreignerIdNumber // Foreigner ID number
 ```
 
-### `Faker\Provider\ar_SA\Payment`
-
-```php
-<?php
-
-echo $faker->bankAccountNumber // "SA0218IBYZVZJSEC8536V4XC"
-```
-
 ### `Faker\Provider\at_AT\Payment`
 
 ```php
@@ -936,22 +925,6 @@ echo $faker->siren; // 082 250 104
 echo $faker->siret; // 347 355 708 00224
 ```
 
-### `Faker\Provider\he_IL\Payment`
-
-```php
-<?php
-
-echo $faker->bankAccountNumber // "IL392237392219429527697"
-```
-
-### `Faker\Provider\hr_HR\Payment`
-
-```php
-<?php
-
-echo $faker->bankAccountNumber // "HR3789114847226078672"
-```
-
 ### `Faker\Provider\hu_HU\Payment`
 
 ```php
@@ -1043,14 +1016,6 @@ echo $faker->metropolitanCity; // "서울특별시"
 
 // Generates a borough
 echo $faker->borough; // "강남구"
-```
-
-### `Faker\Provider\lt_LT\Payment`
-
-```php
-<?php
-
-echo $faker->bankAccountNumber // "LT300848876740317118"
 ```
 
 ### `Faker\Provider\lv_LV\Person`
@@ -1235,6 +1200,15 @@ echo $faker->prefixFemale; // "d-na."
 echo $faker->firstNameMale; // "Adrian"
 // Generates a random female fist name
 echo $faker->firstNameFemale; // "Miruna"
+
+// Generates a random Personal Numerical Code (CNP)
+echo $faker->cnp; // "2800523081231"
+echo $faker->cnp($gender = NULL, $century = NULL, $county = NULL);
+
+// Valid option values:
+//  $gender: m, f, 1, 2
+//  $century: 1800, 1900, 2000, 1, 2, 3, 4, 5, 6
+//  $county: 2 letter ISO 3166-2:RO county codes and B1-B6 for Bucharest's 6 sectors
 ```
 
 ### `Faker\Provider\ro_RO\PhoneNumber`
@@ -1307,7 +1281,6 @@ echo $faker->bank; // '中国建设银行'
 * [nelmio/alice](https://packagist.org/packages/nelmio/alice): Fixtures/object generator with a yaml DSL that can use Faker as data generator.
 * [CakePHP 2.x Fake Seeder Plugin](https://github.com/ravage84/cakephp-fake-seeder) A CakePHP 2.x shell to seed your database with fake and/or fixed data.
 * [images-generator](https://github.com/bruceheller/images-generator): An image generator provider using GD for placeholder type pictures
-* [pattern-lab/plugin-php-faker](https://github.com/pattern-lab/plugin-php-faker): Pattern Lab is a Styleguide, Component Library, and Prototyping tool. This creates unique content each time Pattern Lab is generated.
 
 ## License
 

@@ -62,9 +62,8 @@ class DateTime extends Base
      */
     public static function dateTimeAD($max = 'now', $timezone = null)
     {
-        $min = (PHP_INT_SIZE>4 ? -62135597361 : -PHP_INT_MAX);
         return static::setTimezone(
-            new \DateTime('@' . mt_rand($min, static::getMaxTimestamp($max))),
+            new \DateTime('@' . mt_rand(-62135597361, static::getMaxTimestamp($max))),
             (null === $timezone ? date_default_timezone_get() : $timezone)
         );
     }
@@ -155,7 +154,7 @@ class DateTime extends Base
         $datetime       = $date instanceof \DateTime ? $date : new \DateTime($date);
         $otherDatetime  = clone $datetime;
         $otherDatetime->add($intervalObject);
-
+        
         $begin = $datetime > $otherDatetime ? $otherDatetime : $datetime;
         $end = $datetime===$begin ? $otherDatetime : $datetime;
 

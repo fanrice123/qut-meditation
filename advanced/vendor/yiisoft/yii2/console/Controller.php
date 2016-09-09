@@ -51,11 +51,7 @@ class Controller extends \yii\base\Controller
      * If not set, ANSI color will only be enabled for terminals that support it.
      */
     public $color;
-    /**
-     * @var boolean whether to display help information about current command.
-     * @since 2.0.10
-     */
-    public $help;
+
     /**
      * @var array the options passed during execution.
      */
@@ -106,7 +102,7 @@ class Controller extends \yii\base\Controller
                 if (in_array($name, $options, true)) {
                     $default = $this->$name;
                     if (is_array($default)) {
-                        $this->$name = preg_split('/\s*,\s*(?![^()]*\))/', $value);
+                        $this->$name = preg_split('/(?!\(\d+)\s*,\s*(?!\d+\))/', $value);
                     } elseif ($default !== null) {
                         settype($value, gettype($default));
                         $this->$name = $value;
@@ -119,10 +115,6 @@ class Controller extends \yii\base\Controller
                     throw new Exception(Yii::t('yii', 'Unknown option: --{name}', ['name' => $name]));
                 }
             }
-        }
-        if ($this->help) {
-            $route = $this->id . '/' . $id;
-            return Yii::$app->runAction('help', [$route]);
         }
         return parent::runAction($id, $params);
     }
@@ -311,7 +303,7 @@ class Controller extends \yii\base\Controller
     public function options($actionID)
     {
         // $actionId might be used in subclasses to provide options specific to action id
-        return ['color', 'interactive', 'help'];
+        return ['color', 'interactive'];
     }
 
     /**
@@ -326,9 +318,7 @@ class Controller extends \yii\base\Controller
      */
     public function optionAliases()
     {
-        return [
-            'h' => 'help'
-        ];
+        return [];
     }
 
     /**

@@ -385,12 +385,10 @@ class Request extends \yii\base\Request
                 return $this->_bodyParams;
             }
 
-            $rawContentType = $this->getContentType();
-            if (($pos = strpos($rawContentType, ';')) !== false) {
+            $contentType = $this->getContentType();
+            if (($pos = strpos($contentType, ';')) !== false) {
                 // e.g. application/json; charset=UTF-8
-                $contentType = substr($rawContentType, 0, $pos);
-            } else {
-                $contentType = $rawContentType;
+                $contentType = substr($contentType, 0, $pos);
             }
 
             if (isset($this->parsers[$contentType])) {
@@ -398,13 +396,13 @@ class Request extends \yii\base\Request
                 if (!($parser instanceof RequestParserInterface)) {
                     throw new InvalidConfigException("The '$contentType' request parser is invalid. It must implement the yii\\web\\RequestParserInterface.");
                 }
-                $this->_bodyParams = $parser->parse($this->getRawBody(), $rawContentType);
+                $this->_bodyParams = $parser->parse($this->getRawBody(), $contentType);
             } elseif (isset($this->parsers['*'])) {
                 $parser = Yii::createObject($this->parsers['*']);
                 if (!($parser instanceof RequestParserInterface)) {
                     throw new InvalidConfigException("The fallback request parser is invalid. It must implement the yii\\web\\RequestParserInterface.");
                 }
-                $this->_bodyParams = $parser->parse($this->getRawBody(), $rawContentType);
+                $this->_bodyParams = $parser->parse($this->getRawBody(), $contentType);
             } elseif ($this->getMethod() === 'POST') {
                 // PHP has already parsed the body so we have all params in $_POST
                 $this->_bodyParams = $_POST;

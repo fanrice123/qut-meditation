@@ -455,9 +455,8 @@ class View extends \yii\base\View
      * Please refer to [[Html::jsFile()]] for other supported options.
      *
      * @param string $key the key that identifies the JS script file. If null, it will use
-     * $url as the key. If two JS files are registered with the same key at the same position, the latter
-     * will overwrite the former. Note that position option takes precedence, thus files registered with the same key,
-     * but different position option will not override each other.
+     * $url as the key. If two JS files are registered with the same key, the latter
+     * will overwrite the former.
      */
     public function registerJsFile($url, $options = [], $key = null)
     {
@@ -567,7 +566,7 @@ class View extends \yii\base\View
                 $lines[] = Html::script($js, ['type' => 'text/javascript']);
             }
             if (!empty($this->js[self::POS_LOAD])) {
-                $js = "jQuery(window).on('load', function () {\n" . implode("\n", $this->js[self::POS_LOAD]) . "\n});";
+                $js = "jQuery(window).load(function () {\n" . implode("\n", $this->js[self::POS_LOAD]) . "\n});";
                 $lines[] = Html::script($js, ['type' => 'text/javascript']);
             }
         }

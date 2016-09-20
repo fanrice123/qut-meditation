@@ -16,8 +16,13 @@
     "require": {
         "php": ">=5.4.0",
         "yiisoft/yii2": ">=2.0.6",
-        "yiisoft/yii2-bootstrap": "*",
-        "yiisoft/yii2-swiftmailer": "*"
+        "yiisoft/yii2-bootstrap": "^2.0",
+        "yiisoft/yii2-swiftmailer": "*",
+        "yiisoft/yii2-jui": "^2.0",
+        "kartik-v/yii2-detail-view": "*",
+        "kartik-v/yii2-datecontrol": "dev-master",
+        "kartik-v/yii2-widget-datepicker": "@dev",
+        "kartik-v/yii2-widgets": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

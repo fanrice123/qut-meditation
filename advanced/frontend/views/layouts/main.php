@@ -28,7 +28,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'Omm Meditation',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -36,22 +36,35 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => 'About',
+         'items' => [['label' => 'About Us', 'url' => ['/site/about']],
+                     ['label' => 'Contact', 'url' => ['/site/contact']],
+                     ['label' => 'Donate Us', 'url' => ['/site/donation']]
+                    ]
+        ]
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
+        $menuItems[] = ['label' => Yii::$app->user->identity->firstName,
+                        'items' => [['label' => 'Settings', 'url' => ['/user/view']],                       '<li>'.Html::beginForm(['/site/logout'], 'post')
+                            . Html::submitButton('Logout', ['class' => 'btn btn-link',
+                                                            'style' => 'border-left-width: 10px'])
+                            . Html::endForm() . '</li>']
+                        ];
+        /*
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                'Logout (' . Yii::$app->user->identity->firstName . ')',
                 ['class' => 'btn btn-link']
             )
             . Html::endForm()
             . '</li>';
+        */
     }
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,

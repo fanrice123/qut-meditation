@@ -12,7 +12,7 @@ use frontend\models\SignupForm;
 class SignupPage extends BasePage
 {
 
-    public $route = 'site/signup';
+    public $route = 'site/register';
 
     /**
      * @param array $signupData

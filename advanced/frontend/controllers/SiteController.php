@@ -132,6 +132,16 @@ class SiteController extends Controller
     }
 
     /**
+     * Displays donation page.
+     *
+     * @return maxed
+     */
+    public function actionDonation()
+    {
+        return $this->render('donation');
+    }
+
+    /**
      * Displays about page.
      *
      * @return mixed
@@ -139,6 +149,16 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    /**
+     * Display user page.
+     *
+     * @return mixed
+     */
+    public function actionSetting()
+    {
+        return $this->render('user/view');
     }
 
     /**
@@ -157,7 +177,7 @@ class SiteController extends Controller
             }
         }
 
-        return $this->render('signup', [
+        return $this->render('register', [
             'model' => $model,
         ]);
     }

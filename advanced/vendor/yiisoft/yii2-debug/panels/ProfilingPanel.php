@@ -21,7 +21,7 @@ use yii\debug\models\search\Profile;
 class ProfilingPanel extends Panel
 {
     /**
-     * @var array current request profile timings
+     * @var array current request user timings
      */
     private $_models;
 
@@ -39,7 +39,7 @@ class ProfilingPanel extends Panel
      */
     public function getSummary()
     {
-        return Yii::$app->view->render('panels/profile/summary', [
+        return Yii::$app->view->render('panels/user/summary', [
             'memory' => sprintf('%.3f MB', $this->data['memory'] / 1048576),
             'time' => number_format($this->data['time'] * 1000) . ' ms',
             'panel' => $this
@@ -54,7 +54,7 @@ class ProfilingPanel extends Panel
         $searchModel = new Profile();
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams(), $this->getModels());
 
-        return Yii::$app->view->render('panels/profile/detail', [
+        return Yii::$app->view->render('panels/user/detail', [
             'panel' => $this,
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,

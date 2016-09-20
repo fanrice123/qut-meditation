@@ -26,6 +26,18 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
 
+    /**
+     * self made properties
+
+    public $firstName, $lastName;
+    public $dob;
+    public $phone, $tel;
+    public $address, $postcode, $state, $suburb;
+    public $gender;
+    public $allergies;
+    public $vegan;
+    public $medicInfo;
+     */
 
     /**
      * @inheritdoc

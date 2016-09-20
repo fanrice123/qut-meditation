@@ -1,12 +1,13 @@
 <?php
 namespace backend\controllers;
 
+use common\models\Course;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\AdminLoginForm;
-use common\models\Course;
+use common\models\CreateCourseForm;
 
 /**
  * Site controller
@@ -23,7 +24,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error', 'course'],
                         'allow' => true,
                     ],
                     [
@@ -76,6 +77,8 @@ class SiteController extends Controller
         }
 
         $model = new AdminLoginForm();
+        $test = new Course();
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
@@ -99,19 +102,20 @@ class SiteController extends Controller
 
     public function actionCourse()
     {
-        $model = new Course();
+        $model = new CreateCourseForm();
 
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
+           if ($model->createCourse()) {
                 // form inputs are valid, do something here
-                return;
+                return $this->render('index');
             }
         }
-
         return $this->render('course', [
             'model' => $model,
         ]);
     }
+
+
 }
 
 

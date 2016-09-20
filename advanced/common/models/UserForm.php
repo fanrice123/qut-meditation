@@ -37,6 +37,7 @@ class UserForm extends SignupForm
             ['gender', 'required'],
             ['phone', 'required'],
             ['phone', 'trim'],
+            ['phone', 'integer'],
             ['address', 'required'],
             ['postcode', 'required'],
             ['postcode', 'integer', 'min' => 0, 'max' => 10000],
@@ -48,7 +49,7 @@ class UserForm extends SignupForm
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
-
+            [['allergies', 'medicInfo'], 'safe'],
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
             ['confirmPassword', 'compare', 'compareAttribute'=>'password', 'message'=>"Passwords don't match" ],

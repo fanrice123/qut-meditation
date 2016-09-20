@@ -64,7 +64,7 @@ $attributes = [
                 'format'=> 'date',
                 'type'=>DetailView::INPUT_DATE,
                 'widgetOptions' => [
-                    'pluginOptions'=>['format'=>'dd-M-yyyy']
+                    'pluginOptions'=>['format'=>'yyyy-mm-dd']
                 ],
                 'valueColOptions'=>['style'=>'width:30%'],
             ],

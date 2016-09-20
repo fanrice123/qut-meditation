@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     //'value'=> date('M-dd-yyyy'),
                     'pluginOptions'=>[
                         'autoclose'=>true,
-                        'format'=>'M dd,yyyy'
+                        'format'=>'yyyy-mm-dd'
                     ]
                 ])
             ?>

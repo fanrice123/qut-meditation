@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \common\models\LoginForm */
+/* @var $model \common\models\AdminLoginForm */
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="row">
         <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+            <?php $form = ActiveForm::begin(['id' => 'login-form'], ['options'=>['action'=>'site/login']]); ?>
                 <?= $model->setAttributes('admin', true)?>
 
                 <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
                 <div class="form-group">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'adminLogin-button']) ?>
                 </div>
 
             <?php ActiveForm::end(); ?>

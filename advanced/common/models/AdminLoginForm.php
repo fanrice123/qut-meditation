@@ -7,11 +7,12 @@ use yii\base\Model;
 /**
  * Login form
  */
-class LoginForm extends Model
+class AdminLoginForm extends Model
 {
     public $username;
     public $password;
     public $rememberMe = true;
+    public $admin = true;
 
     private $_user;
 
@@ -27,6 +28,7 @@ class LoginForm extends Model
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
+            ['admin', 'boolean']
         ];
     }
 
@@ -61,7 +63,6 @@ class LoginForm extends Model
         }
     }
 
-
     /**
      * Finds user by [[username]]
      *
@@ -72,6 +73,15 @@ class LoginForm extends Model
         if ($this->_user === null) {
             $this->_user = User::findByUsername($this->username);
         }
-            return $this->_user;
+        return $this->_user->admin ? $this->_user : null;
+    }
+
+    protected function getAdmin()
+    {
+        if ($this->_user === null) {
+            $this->_user = User::findByUsername($this->username);
+
+        }
+        return $this->_user->admin ? $this->_user : null;
     }
 }

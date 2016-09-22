@@ -29,7 +29,7 @@ CREATE TABLE `classtable` (
   KEY `courseID` (`courseID`),
   CONSTRAINT `classtable_ibfk_1` FOREIGN KEY (`studentID`) REFERENCES `user` (`id`),
   CONSTRAINT `classtable_ibfk_2` FOREIGN KEY (`courseID`) REFERENCES `course` (`courseID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -54,7 +54,7 @@ CREATE TABLE `course` (
   `duration` int(11) NOT NULL,
   `end` date NOT NULL,
   PRIMARY KEY (`courseID`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +63,7 @@ CREATE TABLE `course` (
 
 LOCK TABLES `course` WRITE;
 /*!40000 ALTER TABLE `course` DISABLE KEYS */;
-INSERT INTO `course` VALUES (26,'2016-12-09',30,'2017-01-08'),(27,'2016-11-04',3,'2016-11-07'),(28,'2016-09-30',10,'2016-10-10'),(29,'2016-10-07',30,'2016-11-06');
+INSERT INTO `course` VALUES (30,'2016-10-06',10,'2016-10-16');
 /*!40000 ALTER TABLE `course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -75,10 +75,10 @@ DROP TABLE IF EXISTS `migration`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `migration` (
-  `version` varchar(180) COLLATE utf8_unicode_520_ci NOT NULL,
+  `version` varchar(180) CHARACTER SET utf8 COLLATE utf8_unicode_520_ci NOT NULL,
   `apply_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +153,7 @@ CREATE TABLE `volunteer` (
   KEY `courseID` (`courseID`),
   CONSTRAINT `volunteer_ibfk_1` FOREIGN KEY (`studentID`) REFERENCES `user` (`id`),
   CONSTRAINT `volunteer_ibfk_2` FOREIGN KEY (`courseID`) REFERENCES `course` (`courseID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_520_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -174,4 +174,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-23  1:29:35
+-- Dump completed on 2016-09-23  2:15:14

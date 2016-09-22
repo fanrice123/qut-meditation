@@ -31,7 +31,3 @@ phpunit.phar
 
 # vagrant runtime
 /.vagrant
-
-# vim
-/*.*~
-/.*~

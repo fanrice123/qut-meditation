@@ -169,7 +169,7 @@ $attributes = [
 ];
 
 ?>
-<div class="user-view">
+<div class="user-view" id="body">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

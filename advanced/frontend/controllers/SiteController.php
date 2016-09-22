@@ -7,11 +7,13 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\data\ActiveDataProvider;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use common\models\Course;
 
 /**
  * Site controller
@@ -159,6 +161,16 @@ class SiteController extends Controller
     public function actionSetting()
     {
         return $this->render('user/view');
+    }
+
+    public function actionCourse()
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Course::find()->orderBy('start'),
+            'pagination' => ['pageSize' => 10]
+        ]);
+
+        return $this->render('course', ['dataProvider' => $dataProvider]);
     }
 
     /**

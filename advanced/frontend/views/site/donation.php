@@ -7,7 +7,7 @@ use yii\helpers\Html;
 $this->title = 'How to Donate';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-donation" id="aboutUS">
+<div class="site-donation" id="body">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>

@@ -22,7 +22,9 @@
         "kartik-v/yii2-detail-view": "*",
         "kartik-v/yii2-datecontrol": "dev-master",
         "kartik-v/yii2-widget-datepicker": "@dev",
-        "kartik-v/yii2-widgets": "@dev"
+        "kartik-v/yii2-widgets": "@dev",
+        "kartik-v/yii2-grid": "@dev",
+        "kartik-v/yii2-mpdf": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

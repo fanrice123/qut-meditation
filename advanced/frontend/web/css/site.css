@@ -8,17 +8,24 @@ body {
     height: auto;
     margin: 0 auto -60px;
     padding: 0 0 60px;
+    background-color: #29293d;
 }
 
 .wrap > .container {
     padding: 70px 15px 20px;
+
 }
 
 .footer {
     height: 60px;
-    background-color: #f5f5f5;
-    border-top: 1px solid #ddd;
+    width: 70%;
+    margin: auto;
+    background-color: #0d0d0d;
+    border: 1px solid #000000;
     padding-top: 20px;
+    color: #b3b3b3;
+    box-shadow: 10px 10px 5px #14141f;
+    border-radius: 15px 15px 0px 0px;
 }
 
 .jumbotron {
@@ -49,11 +56,11 @@ a.asc:after, a.desc:after {
 }
 
 a.asc:after {
-    content: /*"\e113"*/ "\e151";
+    content: "\e151";
 }
 
 a.desc:after {
-    content: /*"\e114"*/ "\e152";
+    content: "\e152";
 }
 
 .sort-numerical a.asc:after {
@@ -72,8 +79,13 @@ a.desc:after {
     content: "\e156";
 }
 
-.grid-view th {
+.grid-view td {
     white-space: nowrap;
+}
+
+.grid-view .filters input,
+.grid-view .filters select {
+    min-width: 50px;
 }
 
 .hint-block {
@@ -90,24 +102,77 @@ a.desc:after {
     margin: 0 0 15px 0;
 }
 
-.two-cols {
-    float: left;
-    width: 101%
-}
-.two-cols section {
-    width: 48%;
-    float: left;
-    margin: 1%;
+/* align the logout "link" (button in form) of the navbar */
+.nav > li > form {
+    padding: 8px;
 }
 
-.row-by-row {
+@media(max-width:768px) {
+	.nav li > form {
+	    padding: 3px;
+	}
+}
+
+.nav > li > form > button:hover {
+    text-decoration: none;
+}
+
+#header {
+    background-color: #404040;
+}
+
+#body {
     width: 100%;
+    background-color: #FFFFFF;
+    margin: auto;
+    box-shadow: 10px 10px 5px #14141f;
+    border-radius: 10px;
+    padding: 20px;
+
 }
 
-#aboutUS {
-    margin-left: 200px;
-    margin-right: 200px;
-    background-color: #FFFFFF;
+div.img {
+    border: 1px solid #ccc;
+}
+
+div.img:hover {
+    border: 1px solid #777;
+}
+
+div.img img {
+    width: 100%;
+    height: auto;
+}
+
+div.desc {
+    padding: 15px;
     text-align: center;
-    text-shadow: 2px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.responsive {
+    padding: 0 6px;
+    float: left;
+    width: 24.99999%;
+}
+
+@media only screen and (max-width: 700px){
+    .responsive {
+        width: 49.99999%;
+        margin: 6px 0;
+    }
+}
+
+@media only screen and (max-width: 500px){
+    .responsive {
+        width: 100%;
+    }
+}
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
 }

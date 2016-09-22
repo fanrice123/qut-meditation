@@ -24,6 +24,10 @@ class ComposerStaticInit1cecb8322c0813fc8f2f6c69218df38d
             'yii\\bootstrap\\' => 14,
             'yii\\' => 4,
         ),
+        'p' => 
+        array (
+            'purrweb\\heroku\\' => 15,
+        ),
         'k' => 
         array (
             'kartik\\widgets\\' => 15,
@@ -102,6 +106,10 @@ class ComposerStaticInit1cecb8322c0813fc8f2f6c69218df38d
         'yii\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2',
+        ),
+        'purrweb\\heroku\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/purrweb/yii2-heroku',
         ),
         'kartik\\widgets\\' => 
         array (

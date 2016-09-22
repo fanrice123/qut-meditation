@@ -300,4 +300,13 @@ return array (
       '@kartik/mpdf' => $vendorDir . '/kartik-v/yii2-mpdf',
     ),
   ),
+  'purrweb/yii2-heroku' => 
+  array (
+    'name' => 'purrweb/yii2-heroku',
+    'version' => '1.0.0.0',
+    'alias' => 
+    array (
+      '@purrweb/heroku' => $vendorDir . '/purrweb/yii2-heroku',
+    ),
+  ),
 );

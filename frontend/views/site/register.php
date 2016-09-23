@@ -11,7 +11,7 @@ use kartik\date\DatePicker;
 $this->title = 'Signup';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-signup">
+<div class="site-signup" id="body">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>Please fill out the following fields to register your first 10-day course:</p>

@@ -38,8 +38,7 @@ AppAsset::register($this);
         ['label' => 'Home', 'url' => ['/site/index']],
         ['label' => 'Course', 'url' => ['/site/course']],
         ['label' => 'About',
-         'items' => [['label' => 'About Us', 'url' => ['/site/about']],
-                     ['label' => 'Contact', 'url' => ['/site/contact']],
+         'items' => [['label' => 'Contact', 'url' => ['/site/contact']],
                      ['label' => 'Donate Us', 'url' => ['/site/donation']]
                     ]
         ]
@@ -49,7 +48,8 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         $menuItems[] = ['label' => Yii::$app->user->identity->firstName,
-                        'items' => [['label' => 'Settings', 'url' => ['/user/view']],                       '<li>'.Html::beginForm(['/site/logout'], 'post')
+                        'items' => [['label' => 'Settings', 'url' => ['/user/view']],
+                            '<li>'.Html::beginForm(['/site/logout'], 'post')
                             . Html::submitButton('Logout', ['class' => 'btn btn-link',
                                                             'style' => 'border-left-width: 10px'])
                             . Html::endForm() . '</li>']

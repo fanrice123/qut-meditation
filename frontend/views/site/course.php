@@ -79,11 +79,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'options' => ['style' => 'width:20%'],
                     'buttons' => [
                         'enroll' => function ($url, $model) {
-                            return Html::a(
-                                '<span class="glyphicon glyphicon-education">Enroll Now</span>',
+                            $result = common\models\Student::find()->where(['courseID' => $model->courseID, 'studentID' => Yii::$app->user->identity->id])->all();
+                            return empty($result) ? Html::a(
+                                '<span class="glyphicon glyphicon-education"> Enroll Now</span>',
                                 ['/site/enroll', 'id' => $model->courseID, 'date' => $model->start],
                                 ['title' => 'Enroll']
-                                );
+                                ) : '<span class="glyphicon glyphicon-education"> Enrolled</span>';
                         }
                     ],
                 ]

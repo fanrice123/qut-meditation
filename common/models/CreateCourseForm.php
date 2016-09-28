@@ -58,6 +58,6 @@ class CreateCourseForm extends Model
         $course->end = date('Y-m-d', strtotime($this->start . $duration));
 //        $course->end = date('Y-m-d', strtotime($this->start.' + '.$this->duration.' days'));
 
-        return !$course->save() ? $course : null;
+        return $course->save() ? $course : null;
     }
 }

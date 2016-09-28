@@ -107,8 +107,14 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post())) {
            if ($model->createCourse()) {
                 // form inputs are valid, do something here
-                return $this->render('index');
-            }
+               Yii::$app->session->setFlash('success', 'You have successfully create a class starting on '
+                                                        .$model->start.' with duration of '.$model->duration.' day'
+                                                        .$model->duration == 1 ? '.' : 's.'
+               );
+            } else {
+               Yii::$app->session->setFlash('danger', 'Course creating failed, please recheck your input(s). '
+                                                      .'If you assure that the inputs are valid, please contact database administrator.');
+           }
         }
         return $this->render('course', [
             'model' => $model,

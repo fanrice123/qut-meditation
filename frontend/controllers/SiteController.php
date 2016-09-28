@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use Yii;
+use yii\db\Query;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -15,6 +16,8 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\models\Course;
 use common\models\Student;
+use common\models\Volunteer;
+
 
 /**
  * Site controller
@@ -166,8 +169,9 @@ class SiteController extends Controller
 
     public function actionCourse()
     {
+
         $dataProvider = new ActiveDataProvider([
-            'query' => Course::find()->orderBy('start'),
+            'query' => Course::find()->where('DATE(start) > \''.date('Y-m-d').'\'')->orderBy('start'),
             'pagination' => ['pageSize' => 10]
         ]);
 
@@ -244,27 +248,69 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionEnroll($id, $date) {
+    public function actionEnroll($id, $startDate, $endDate) {
 
         if (Yii::$app->user->isGuest) {
-            return $this->redirect('/site/login');
+            return $this->actionLogin();
         }
 
-        $studentTable = Student::find()->where(['studentID' => Yii::$app->user->identity->id, 'courseID' => $id])->all();
-        if (sizeof($studentTable) == 0) {
+        $subQuery = (new Query())->select(['cls.studentID', 'cls.courseID', 'c.start', 'c.end'])->from('classtable cls')->where(['studentID' => Yii::$app->user->identity->id])->innerJoin('course c', 'cls.courseID=c.courseID');
+        $studentTable = (new Query())->from(['t' => $subQuery])->where('\''.$startDate.'\' <= DATE(t.end) AND \''.$endDate.'\' >= DATE(t.start)')->one();
+        if (empty($studentTable)) {
             $student = new Student();
             $student->studentID = Yii::$app->user->identity->id;
             $student->courseID = $id;
 
             if ($student->save()) {
-                Yii::$app->session->setFlash('success', 'You have successfully enrolled the class starting on '.$date);
+                Yii::$app->session->setFlash('success', 'You have successfully enrolled the class starting on '.$startDate);
             }
             else {
                 Yii::$app->session->setFlash('warning', 'Sorry, Error caused.\nEnrollment failed.');
             }
         } else {
-            Yii::$app->session->setFlash('danger', 'Sorry, you have already enrolled the class');
+            if ($startDate == $studentTable['start']){
+                Yii::$app->session->setFlash('danger', 'Sorry, you have already enrolled the class');
+            } else {
+                Yii::$app->session->setFlash('danger', 'Sorry, you have already enrolled a class which will start on ' . $studentTable['start'] . ' that conflicts with the class you are intending to enroll.');
+            }
         }
         return $this->actionCourse();
     }
+
+    public function actionRoster()
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Course::find()->where('DATE(start) > \''.date('Y-m-d').'\'')->orderBy('start'),
+            'pagination' => ['pageSize' => 10]
+        ]);
+
+        return $this->render('roster', ['dataProvider' => $dataProvider]);
+
+    }
+
+    public function actionVolunteer($id, $startDate, $endDate) {
+
+        $subQuery = (new Query())->select(['v.studentID', 'v.courseID', 'c.start', 'c.end'])->from('volunteer v')->where(['studentID' => Yii::$app->user->identity->id])->innerJoin('course c', 'v.courseID=c.courseID');
+        $volunteerTable = (new Query())->from(['t' => $subQuery])->where('\''.$startDate.'\' <= DATE(t.end) AND \''.$endDate.'\' >= DATE(t.start)')->one();
+        if (empty($volunteerTable)) {
+            $volunteer = new Volunteer();
+            $volunteer->studentID = Yii::$app->user->identity->id;
+            $volunteer->courseID = $id;
+
+            if ($volunteer->save()) {
+                Yii::$app->session->setFlash('success', 'You have successfully volunteered the class starting on '.$startDate);
+            }
+            else {
+                Yii::$app->session->setFlash('warning', 'Sorry, Error caused.\nVolunteer request failed.');
+            }
+        } else {
+            if ($startDate == $volunteerTable['start']){
+                Yii::$app->session->setFlash('danger', 'Sorry, you have already volunteered the class');
+            } else {
+                Yii::$app->session->setFlash('danger', 'Sorry, you have already volunteered a class which will start on ' . $volunteerTable['start'] . ' that conflicts with the class you are intending to volunteered.');
+            }
+        }
+        return $this->actionRoster();
+    }
+
 }

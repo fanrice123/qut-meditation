@@ -51,7 +51,7 @@ class CreateCourseForm extends Model
 
         $temp = $this->duration;
         $course->duration = $temp;
-        $duration = $temp;
+        $duration = ($temp - 1);
         $duration = ' + '.$duration;
         $duration = $duration.' days';
 

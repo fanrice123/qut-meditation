@@ -2,36 +2,20 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\widgets\LinkPager;
 use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $dataProvider common\models\Course */
+/* @var $model common\models\Volunteer */
 /* @var $form ActiveForm */
 /* @var $dataprovider Courses */
 
 $this->title = 'Course List';
-$this->params['breadcrumbs'][] = ['label' => 'Course', 'url' => ['course']];
+$this->params['breadcrumbs'][] = ['label' => 'Roster', 'url' => ['roster']];
 $this->params['breadcrumbs'][] = $this->title;
-
 ?>
-<div class="course" id="body">
-
+<div class="site-roster" id="body">
     <h1><?= Html::encode($this->title) ?></h1>
-
-
     <div class="col-lg-10">
-        <!--<?php if (Yii::$app->session->hasFlash('success')): ?>
-            <div class="alert alert-success alert-dismissable">
-                <?= Yii::$app->session->getFlash('success') ?>
-            </div>
-        <? elseif (Yii::$app->session->hasFlash('warning')): ?>
-            <div class="alert alert-danger alert-dismissable">
-                <?= Yii::$app->session->getFlash('warning') ?>
-            </div>
-        <?php endif; ?>
-
-        <!--<?php $form = ActiveForm::begin(); ?>-->
 
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
@@ -79,31 +63,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     'options' => ['style' => 'width:20%'],
                     'buttons' => [
                         'enroll' => function ($url, $model) {
-                            if (Yii::$app->user->isGuest) {
-                                return Html::a('<span class="glyphicon glyphicon-education"> Enroll Now</span>',
-                                                ['/site/enroll', 'id' => $model->courseID, 'startDate' => $model->start, 'endDate' => $model->end],
-                                                ['title' => 'Enroll']
-                                );
-                            } else {
-                                $result = common\models\Student::find()->where(['courseID' => $model->courseID, 'studentID' => Yii::$app->user->identity->id])->all();
-                                return empty($result) ? Html::a(
-                                    '<span class="glyphicon glyphicon-education"> Enroll Now</span>',
-                                    ['/site/enroll', 'id' => $model->courseID, 'startDate' => $model->start, 'endDate' => $model->end],
-                                    ['title' => 'Enroll']
-                                ) : '<span class="glyphicon glyphicon-education"> Enrolled</span>';
-                            }
+                            $result = common\models\Volunteer::find()->where(['courseID' => $model->courseID, 'studentID' => Yii::$app->user->identity->id])->all();
+                            return empty($result) ? Html::a(
+                                '<span class="glyphicon glyphicon-apple"> Volunteer Now</span>',
+                                ['/site/volunteer', 'id' => $model->courseID, 'startDate' => $model->start, 'endDate' => $model->end],
+                                ['title' => 'Enroll']
+                            ) : '<span class="glyphicon glyphicon-apple"> Volunteered</span>';
                         }
                     ],
                 ]
             ]
-    ]) ?>
-    
-      <!--  <div class="form-group">
-            <!--<?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
-        </div>
-    <?php ActiveForm::end(); ?>-->
-
-
+        ]); ?>
     </div>
 
-</div><!-- course -->
+</div><!-- site-roster -->

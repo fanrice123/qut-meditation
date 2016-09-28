@@ -109,7 +109,7 @@ class SiteController extends Controller
                 // form inputs are valid, do something here
                Yii::$app->session->setFlash('success', 'You have successfully create a class starting on '
                                                         .$model->start.' with duration of '.$model->duration.' day'
-                                                        .$model->duration == 1 ? '.' : 's.'
+                                                        .($model->duration == 1 ? '.' : 's.')
                );
             } else {
                Yii::$app->session->setFlash('danger', 'Course creating failed, please recheck your input(s). '

@@ -34,7 +34,6 @@ $this->params['breadcrumbs'][] = $this->title;
         (Insert picture gallery of the centre here)
     </p>
 
-    <code><?= __FILE__ ?></code>
 </div>
 
 

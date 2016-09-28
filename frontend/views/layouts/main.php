@@ -28,7 +28,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Omm Meditation',
+        'brandLabel' => 'Om~ Meditation',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -36,12 +36,15 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'Course', 'url' => ['/site/course']],
-        ['label' => 'About',
+        ['label' => 'Course', 'url' => ['/site/course']]
+    ];
+    if (!Yii::$app->user->isGuest) {
+        $menuItems[] = ['label' => 'Roster', 'url' => ['/site/roster']];
+    }
+    $menuItems[] = ['label' => 'About',
          'items' => [['label' => 'Contact', 'url' => ['/site/contact']],
                      ['label' => 'Donate Us', 'url' => ['/site/donation']]
                     ]
-        ]
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];

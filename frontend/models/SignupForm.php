@@ -87,6 +87,7 @@ class SignupForm extends Model
         $user->allergies = $this->allergies;
         $user->medicInfo = $this->medicInfo;
         $user->email = $this->email;
+        $user->admin = true;
         $user->setPassword($this->password);
         $user->generateAuthKey();
         

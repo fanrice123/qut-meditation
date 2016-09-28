@@ -14,6 +14,7 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\models\Course;
+use common\models\Student;
 
 /**
  * Site controller
@@ -241,5 +242,29 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+    public function actionEnroll($id, $date) {
+
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect('/site/login');
+        }
+
+        $studentTable = Student::find()->where(['studentID' => Yii::$app->user->identity->id, 'courseID' => $id])->all();
+        if (sizeof($studentTable) == 0) {
+            $student = new Student();
+            $student->studentID = Yii::$app->user->identity->id;
+            $student->courseID = $id;
+
+            if ($student->save()) {
+                Yii::$app->session->setFlash('success', 'You have successfully enrolled the class starting on '.$date);
+            }
+            else {
+                Yii::$app->session->setFlash('warning', 'Sorry, Error caused.\nEnrollment failed.');
+            }
+        } else {
+            Yii::$app->session->setFlash('danger', 'Sorry, you have already enrolled the class');
+        }
+        return $this->actionCourse();
     }
 }

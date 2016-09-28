@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <div class="col-lg-10">
-        <?php if (Yii::$app->session->hasFlash('success')): ?>
+        <!--<?php if (Yii::$app->session->hasFlash('success')): ?>
             <div class="alert alert-success alert-dismissable">
                 <?= Yii::$app->session->getFlash('success') ?>
             </div>
@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         <?php endif; ?>
 
-        <?php $form = ActiveForm::begin(); ?>
+        <!--<?php $form = ActiveForm::begin(); ?>-->
 
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
@@ -47,6 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['class' => 'kartik\grid\SerialColumn'],
                 [
                     'attribute' => 'courseID',
+                    'width' => '120px',
                 ],
                 [
                     'attribute' => 'course_start',
@@ -80,19 +81,19 @@ $this->params['breadcrumbs'][] = $this->title;
                         'enroll' => function ($url, $model) {
                             return Html::a(
                                 '<span class="glyphicon glyphicon-education">Enroll Now</span>',
-                                ['/course/enroll', 'id' => $model->courseID, 'date' => $model->start],
+                                ['/site/enroll', 'id' => $model->courseID, 'date' => $model->start],
                                 ['title' => 'Enroll']
-                            );
+                                );
                         }
                     ],
                 ]
             ]
     ]) ?>
     
-        <div class="form-group">
-            <!--<?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>-->
+      <!--  <div class="form-group">
+            <!--<?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
         </div>
-    <?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>-->
 
 
     </div>

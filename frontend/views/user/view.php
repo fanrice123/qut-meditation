@@ -73,7 +73,7 @@ $attributes = [
                 'label'=>'Gender',
                 'type'=>DetailView::INPUT_SELECT2,
                 'widgetOptions'=>[
-                    'data'=>['Male', 'Female', 'others' => 'Not Specified'],
+                    'data'=>['male' => 'Male', 'female' => 'Female', 'others' => 'Not Specified'],
                     'options'=>['placeholder'=>'Select ...']
                 ],
                 'valueColOptions'=>['style'=>'width:30%']
@@ -118,7 +118,15 @@ $attributes = [
                 'label'=>'State',
                 'type'=>DetailView::INPUT_SELECT2,
                 'widgetOptions'=>[
-                    'data'=>['ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA'],
+                    'data'=>['ACT' => 'ACT',
+                             'NSW' => 'NSW',
+                             'NT' => 'NT',
+                             'QLD' => 'QLD',
+                             'SA' => 'SA',
+                             'TAS' => 'TAS',
+                             'VIC' => 'VIC',
+                             'WA' => 'WA'
+                    ],
                     'options'=>['placeholder'=>'Select ...'],
                 ],
                 'valueColOptions'=>['style'=>'width:30%']
@@ -172,17 +180,6 @@ $attributes = [
 <div class="user-view" id="body">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
 
 
     <?php $form = ActiveForm::begin() ?>

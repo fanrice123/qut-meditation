@@ -53,7 +53,7 @@ class SignupForm extends Model
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
-            [['allergies', 'medicInfo'], 'safe'],
+            [['allergies', 'medicInfo', 'tel'], 'safe'],
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
             ['confirmPassword', 'compare', 'compareAttribute'=>'password', 'message'=>"Passwords don't match" ],
@@ -87,10 +87,29 @@ class SignupForm extends Model
         $user->allergies = $this->allergies;
         $user->medicInfo = $this->medicInfo;
         $user->email = $this->email;
-        $user->admin = true;
+        $user->admin = false;
         $user->setPassword($this->password);
         $user->generateAuthKey();
         
         return $user->save() ? $user : null;
+    }
+
+    public function copyValueTo(&$user)
+    {
+        $user->firstName = $this->firstName;
+        $user->lastName = $this->lastName;
+        $user->dob = $this->dob;
+        $user->gender = $this->gender;
+        $user->address = $this->address;
+        $user->phone = $this->phone;
+        $user->tel = $this->tel;
+        $user->postcode = $this->postcode;
+        $user->suburb = $this->suburb;
+        $user->state = $this->state;
+        $user->vegan = $this->vegan;
+        $user->allergies = $this->allergies;
+        $user->medicInfo = $this->medicInfo;
+
+        return $user->save();
     }
 }

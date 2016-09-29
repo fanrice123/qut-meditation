@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\models\SignupForm;
 use Yii;
 use common\models\User;
 use common\models\UserForm;
@@ -30,70 +31,25 @@ class UserController extends Controller
     }
 
     /**
-     * Lists all User models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new UserForm();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
      * Displays a single User model.
-     * @param integer $id
      * @return mixed
      */
     public function actionView()
     {
-        $model = $this->findModel(Yii::$app->user->id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $backModel = $this->findModel(Yii::$app->user->id);
+        $model = new UserForm();
+        $model->copyGeneralFrom($backModel);
+        if ($model->load(Yii::$app->request->post()) && $model->updateGeneralTo($backModel)) {
+            //$model->copyValueTo($backModel);
             Yii::$app->session->setFlash('kv-detail-success', 'Saved record successfully');
             // Multiple alerts can be set like below
             Yii::$app->session->setFlash('kv-detail-warning', 'A last warning for completing all data.');
             Yii::$app->session->setFlash('kv-detail-info', '<b>Note:</b> You can proceed by clicking <a href="#">this link</a>.');
-            return $this->redirect(['view', 'id'=>$model->id]);
+            return $this->redirect(['view', 'model'=>$model]);
         } else {
+            Yii::$app->session->setFlash('kv-detail-danger', 'Failed to load data.');
             return $this->render('view', ['model'=>$model]);
         }
-    }
-
-    /**
-     * Updates an existing User model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Deletes an existing User model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**

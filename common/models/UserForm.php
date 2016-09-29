@@ -13,6 +13,9 @@ use common\models\User;
  */
 class UserForm extends SignupForm
 {
+
+    public $id;
+
     /**
      * @inheritdoc
      */
@@ -25,11 +28,6 @@ class UserForm extends SignupForm
         ];
         */
         return [
-            ['username', 'trim'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
-
             ['firstName', 'required'],
             ['lastName', 'required'],
             ['dob', 'required'],
@@ -44,80 +42,58 @@ class UserForm extends SignupForm
             ['state', 'required'],
             ['suburb', 'required'],
             ['vegan', 'required'],
-            ['email', 'trim'],
-            ['email', 'required'],
-            ['email', 'email'],
-            ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
-            [['allergies', 'medicInfo'], 'safe'],
-            ['password', 'required'],
-            ['password', 'string', 'min' => 6],
-            ['confirmPassword', 'compare', 'compareAttribute'=>'password', 'message'=>"Passwords don't match" ],
+            [['id', 'allergies', 'medicInfo', 'username', 'email', 'password_hash'], 'safe'],
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function scenarios()
+    public function copyGeneralFrom($user)
     {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
+        $this->id = $user->id;
+        $this->username = $user->username;
+        $this->postcode = $user->postcode;
+        $this->vegan = $user->vegan;
+        $this->firstName = $user->firstName;
+        $this->lastName = $user->lastName;
+        $this->dob = $user->dob;
+        $this->gender = $user->gender;
+        $this->phone = $user->phone;
+        $this->tel = $user->tel;
+        $this->address = $user->address;
+        $this->state = $user->state;
+        $this->suburb = $user->suburb;
+        $this->allergies = $user->allergies;
+        $this->medicInfo = $user->medicInfo;
+        /*
+return [
+    [['id', 'admin', 'status', 'created_at', 'updated_at', 'postcode', 'vegan'], 'integer'],
+    [['username', 'firstName', 'lastName', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'dob', 'gender', 'phone', 'tel', 'address', 'state', 'suburb', 'allergies', 'medicInfo'], 'safe'],
+];
+*/
     }
 
+
     /**
-     * Creates data provider instance with search query applied
+     * populate new personal general infos to `$user`
      *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
+     * @param User $user
+     * @return boolean
      */
-    public function search($params)
+    public function updateGeneralTo($user)
     {
-        $query = User::find();
+        $user->firstName = $this->firstName;
+        $user->lastName = $this->lastName;
+        $user->postcode = $this->postcode;
+        $user->vegan = $this->vegan;
+        $user->dob = $this->dob;
+        $user->gender = $this->gender;
+        $user->phone = $this->phone;
+        $user->tel = $this->tel;
+        $user->address = $this->address;
+        $user->state = $this->state;
+        $user->suburb = $this->suburb;
+        $user->allergies = $this->allergies;
+        $user->medicInfo = $this->medicInfo;
 
-        // add conditions that should always apply here
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            $query->where('0=1');
-            return $dataProvider;
-        }
-
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'admin' => $this->admin,
-            'dob' => $this->dob,
-            'status' => $this->status,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'postcode' => $this->postcode,
-            'vegan' => $this->vegan,
-        ]);
-
-        $query->andFilterWhere(['like', 'username', $this->username])
-            ->andFilterWhere(['like', 'firstName', $this->firstName])
-            ->andFilterWhere(['like', 'lastName', $this->lastName])
-            ->andFilterWhere(['like', 'auth_key', $this->auth_key])
-            ->andFilterWhere(['like', 'password_hash', $this->password_hash])
-            ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'gender', $this->gender])
-            ->andFilterWhere(['like', 'phone', $this->phone])
-            ->andFilterWhere(['like', 'tel', $this->tel])
-            ->andFilterWhere(['like', 'address', $this->address])
-            ->andFilterWhere(['like', 'state', $this->state])
-            ->andFilterWhere(['like', 'suburb', $this->suburb])
-            ->andFilterWhere(['like', 'allergies', $this->allergies])
-            ->andFilterWhere(['like', 'medicInfo', $this->medicInfo]);
-
-        return $dataProvider;
+        return $user->save();
     }
 }

@@ -33,7 +33,6 @@ class SignupForm extends Model
             ['username', 'required'],
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
-
             ['firstName', 'required'],
             ['lastName', 'required'],
             ['dob', 'required'],
@@ -90,26 +89,8 @@ class SignupForm extends Model
         $user->admin = false;
         $user->setPassword($this->password);
         $user->generateAuthKey();
-        
+
         return $user->save() ? $user : null;
     }
 
-    public function copyValueTo(&$user)
-    {
-        $user->firstName = $this->firstName;
-        $user->lastName = $this->lastName;
-        $user->dob = $this->dob;
-        $user->gender = $this->gender;
-        $user->address = $this->address;
-        $user->phone = $this->phone;
-        $user->tel = $this->tel;
-        $user->postcode = $this->postcode;
-        $user->suburb = $this->suburb;
-        $user->state = $this->state;
-        $user->vegan = $this->vegan;
-        $user->allergies = $this->allergies;
-        $user->medicInfo = $this->medicInfo;
-
-        return $user->save();
-    }
 }

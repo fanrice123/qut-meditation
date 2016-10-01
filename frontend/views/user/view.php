@@ -3,14 +3,17 @@
 use yii\helpers\Html;
 use kartik\detail\DetailView;
 use yii\widgets\ActiveForm;
+use yii\widgets\Breadcrumbs;
+use common\widgets\Alert;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\User */
 
 $this->title = 'User Profile - ' . $model->firstName;
 //$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$this->params['fluid'] = true;
 
 
 $attributes = [
@@ -177,27 +180,58 @@ $attributes = [
 ];
 
 ?>
-<div class="user-view" id="body">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="col-md-2">
 
+    <div class="list-group" id="setting-nav">
+        <a class="list-group-item active" data-toggle="collapse" data-parent="#setting-nav" href="#general-setting" aria-expanded="true">
+            General Personal Info <b class="caret"></b>
+        </a>
+        <div id="general-setting" class="submenu panel-collapse collapse in" role="tabpanel">
+            <?= Html::a('Personal Info', ['user/view'], ['class' => 'list-group-item active', 'id' => 'sub-item']) ?>
+        </div>
+        <a class="list-group-item" data-toggle="collapse" data-parent="#setting-nav" href="#security-setting" aria-expanded="false">
+            Security Seting <b class="caret"></b>
+        </a>
+        <div id="security-setting" class="submenu panel-collapse collapse" role="tabpanel">
+            <?= Html::a('Email', ['user/change-email'], ['class' => 'list-group-item', 'id' => 'sub-item']) ?>
+            <?= Html::a('Password', ['change-password'], ['class' => 'list-group-item']) ?>
+        </div>
+    </div>
 
-    <?php $form = ActiveForm::begin() ?>
+</div>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => $attributes,
-        'bordered' => true,
-        'responsive' => true,
-        'hover' => true,
-        'panel'=>[
-            'heading'=>'<i class="glyphicon glyphicon-user"></i> General Info',
-            'type'=>'primary'
-        ],
-        'buttons1' => '{update}',
-        'buttons2' => '{reset} {view} {save}'
+<div class="col-md-5">
+<div class="container">
+    <div class="user-view">
+    <?= Breadcrumbs::widget([
+        'links' => $this->params['breadcrumbs'],
     ]) ?>
+    <?= Alert::widget() ?>
+    <div class="col-md-9" id="body">
 
-    <?php ActiveForm::end() ?>
+        <h1><?= Html::encode($this->title) ?></h1>
 
+
+        <?php $form = ActiveForm::begin() ?>
+
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => $attributes,
+            'bordered' => true,
+            'responsive' => true,
+            'hover' => true,
+            'panel'=>[
+                'heading'=>'<i class="glyphicon glyphicon-user"></i> General Info',
+                'type'=>'primary'
+            ],
+            'buttons1' => '{update}',
+            'buttons2' => '{reset} {view} {save}'
+        ]) ?>
+
+        <?php ActiveForm::end() ?>
+
+    </div>
+    </div><!-- user-view -->
+</div>
 </div>

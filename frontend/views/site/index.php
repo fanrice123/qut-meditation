@@ -5,7 +5,6 @@
 use yii\helpers\Html;
 
 $this->title = 'About Us ~ Omm Meditation Centre';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-index"  id="body">
     <h1><?= Html::encode($this->title) ?></h1>

@@ -65,10 +65,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'enroll' => function ($url, $model) {
                             $result = common\models\Volunteer::find()->where(['courseID' => $model->courseID, 'studentID' => Yii::$app->user->identity->id])->all();
                             return empty($result) ? Html::a(
-                                '<span class="glyphicon glyphicon-apple"> Volunteer Now</span>',
+                                'Volunteer Now',
                                 ['/site/volunteer', 'id' => $model->courseID, 'startDate' => $model->start, 'endDate' => $model->end],
-                                ['title' => 'Enroll']
-                            ) : '<span class="glyphicon glyphicon-apple"> Volunteered</span>';
+                                ['class' => 'list-group-item list-group-item-info']
+                            ) : '<a href="#" class="list-group-item disabled">Volunteered</a>';
                         }
                     ],
                 ]

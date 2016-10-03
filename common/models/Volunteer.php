@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "volunteer".
@@ -13,7 +14,7 @@ use Yii;
  * @property User $student
  * @property Course $course
  */
-class Volunteer extends \yii\db\ActiveRecord
+class Volunteer extends ActiveRecord
 {
     /**
      * @inheritdoc

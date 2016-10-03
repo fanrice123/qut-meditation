@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "course".
@@ -12,7 +13,7 @@ use Yii;
  * @property integer $duration
  * @property string $end
  */
-class Course extends \yii\db\ActiveRecord
+class Course extends ActiveRecord
 {
     /**
      * @inheritdoc

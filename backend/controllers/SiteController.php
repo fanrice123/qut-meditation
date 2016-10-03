@@ -1,4 +1,5 @@
 <?php
+
 namespace backend\controllers;
 
 use common\models\Course;
@@ -8,6 +9,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\AdminLoginForm;
 use common\models\CreateCourseForm;
+use common\models\Report;
 
 /**
  * Site controller
@@ -24,11 +26,11 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'course'],
+                        'actions' => ['login', 'error'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index', 'course', 'report'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -121,6 +123,21 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionReport()
+    {
+        $model = new Report();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                // form inputs are valid, do something here
+                return;
+            }
+        }
+
+        return $this->render('report', [
+            'model' => $model,
+        ]);
+    }
 
 }
 

@@ -172,6 +172,7 @@ class SiteController extends Controller
 
         $dataProvider = new ActiveDataProvider([
             'query' => Course::find()->where('DATE(start) > \''.date('Y-m-d').'\'')->orderBy('start'),
+            'sort' => false,
             'pagination' => ['pageSize' => 10]
         ]);
 
@@ -254,6 +255,16 @@ class SiteController extends Controller
             return $this->actionLogin();
         }
 
+        /*
+         *  SELECT * FROM (
+         *      SELECT cls.studentID, cls.courseID, c.start, c.end
+         *      FROM classtable cls
+         *      WHERE studentID = Yii->$app->user->identity->id
+         *      INNER JOIN course c
+         *      ON cls.courseID = c.courseID
+         *  ) T
+         *  WHERE '$startDate' = DATE(t.end) AND '$endDate' = DATE(t.start);
+         */
         $subQuery = (new Query())->select(['cls.studentID', 'cls.courseID', 'c.start', 'c.end'])->from('classtable cls')->where(['studentID' => Yii::$app->user->identity->id])->innerJoin('course c', 'cls.courseID=c.courseID');
         $studentTable = (new Query())->from(['t' => $subQuery])->where('\''.$startDate.'\' <= DATE(t.end) AND \''.$endDate.'\' >= DATE(t.start)')->one();
         if (empty($studentTable)) {

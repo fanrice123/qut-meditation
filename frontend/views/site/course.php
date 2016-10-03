@@ -4,34 +4,23 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\LinkPager;
 use kartik\grid\GridView;
+use common\models\Course;
 
 /* @var $this yii\web\View */
-/* @var $dataProvider common\models\Course */
+/* @var $dataProvider yii\data\ActiveDataProvider; */
 /* @var $form ActiveForm */
-/* @var $dataprovider Courses */
 
 $this->title = 'Course List';
-$this->params['breadcrumbs'][] = ['label' => 'Course', 'url' => ['course']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = 'Course';
+$this->params['fluid'] = true;
 
 ?>
-<div class="course" id="body">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="course">
 
 
-    <div class="col-lg-10">
-        <!--<?php if (Yii::$app->session->hasFlash('success')): ?>
-            <div class="alert alert-success alert-dismissable">
-                <?= Yii::$app->session->getFlash('success') ?>
-            </div>
-        <? elseif (Yii::$app->session->hasFlash('warning')): ?>
-            <div class="alert alert-danger alert-dismissable">
-                <?= Yii::$app->session->getFlash('warning') ?>
-            </div>
-        <?php endif; ?>
+    <div class="col-lg-10" id="body">
 
-        <!--<?php $form = ActiveForm::begin(); ?>-->
+        <h1><?= Html::encode($this->title) ?></h1>
 
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
@@ -40,19 +29,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'hover' => true,
             'export' => false,
             'panel'=>[
-                'heading'=>'<i class="glyphicon glyphicon-calender"></i> Courses Available',
+                'heading'=>'<i class="glyphicon glyphicon-calendar"></i> Courses Available',
                 'type'=>'primary'
             ],
             'columns' => [
                 ['class' => 'kartik\grid\SerialColumn'],
                 [
                     'attribute' => 'courseID',
+                    'vAlign' => 'middle',
+                    'hAlign' => 'center',
                     'width' => '120px',
                 ],
                 [
                     'attribute' => 'course_start',
                     'width' => '250px',
                     'hAlign' => 'right',
+                    'vAlign' => 'middle',
                     'value' => function($model, $key, $index, $widget) {
                         return $model->start;
                     }
@@ -60,7 +52,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'duration_(days)',
                     'width' => '120px',
-                    'hAlign' => 'right',
+                    'vAlign' => 'middle',
+                    'hAlign' => 'center',
                     'value' => function ($model, $key, $index, $widget) {
                         return $model->duration;
                     }
@@ -68,6 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'course_end',
                     'width' => '250px',
+                    'vAlign' => 'middle',
                     'hAlign' => 'right',
                     'value' => function($model, $key, $index, $widget) {
                         return $model->end;
@@ -80,28 +74,29 @@ $this->params['breadcrumbs'][] = $this->title;
                     'buttons' => [
                         'enroll' => function ($url, $model) {
                             if (Yii::$app->user->isGuest) {
-                                return Html::a('<span class="glyphicon glyphicon-education"> Enroll Now</span>',
+                                return Html::a('Enroll Now',
                                                 ['/site/enroll', 'id' => $model->courseID, 'startDate' => $model->start, 'endDate' => $model->end],
-                                                ['title' => 'Enroll']
+                                                [
+                                                    'class' => 'list-group-item list-group-item-success',
+                                                    'title' => 'Enroll the course now!'
+                                                ]
                                 );
                             } else {
                                 $result = common\models\Student::find()->where(['courseID' => $model->courseID, 'studentID' => Yii::$app->user->identity->id])->all();
                                 return empty($result) ? Html::a(
-                                    '<span class="glyphicon glyphicon-education"> Enroll Now</span>',
+                                    'Enroll Now',
                                     ['/site/enroll', 'id' => $model->courseID, 'startDate' => $model->start, 'endDate' => $model->end],
-                                    ['title' => 'Enroll']
-                                ) : '<span class="glyphicon glyphicon-education"> Enrolled</span>';
+                                    [
+                                        'class' => 'list-group-item list-group-item-success',
+                                        'title' => 'Enroll the course now!'
+                                    ]
+                                ) : '<a href="#" title="You have already enrolled this course." class="list-group-item disabled">Enrolled</a>';
                             }
                         }
                     ],
                 ]
             ]
     ]) ?>
-    
-      <!--  <div class="form-group">
-            <!--<?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
-        </div>
-    <?php ActiveForm::end(); ?>-->
 
 
     </div>

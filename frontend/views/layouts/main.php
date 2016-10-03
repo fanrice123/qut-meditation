@@ -51,10 +51,14 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         $menuItems[] = ['label' => Yii::$app->user->identity->firstName,
-                        'items' => [['label' => 'Settings', 'url' => ['/user/view']],
+                        'items' => [
+                            ['label' => 'Enrollment', 'url' => ['/user/all-enrollments']],
+                            ['label' => 'Report', 'url' => ['/user/report']],
+                            ['label' => 'Settings', 'url' => ['/user/view']],
+                            '<li role="separator" class="divider"></li>',
                             '<li>'.Html::beginForm(['/site/logout'], 'post')
                             . Html::submitButton('Logout', ['class' => 'btn btn-link',
-                                                            'style' => 'border-left-width: 10px'])
+                                'style' => 'border-left-width: 10px'])
                             . Html::endForm() . '</li>']
                         ];
         /*

@@ -24,7 +24,10 @@
         "kartik-v/yii2-widget-datepicker": "@dev",
         "kartik-v/yii2-widgets": "@dev",
         "kartik-v/yii2-grid": "@dev",
-        "kartik-v/yii2-mpdf": "@dev"
+        "kartik-v/yii2-mpdf": "@dev",
+        "michelf/php-smartypants": "dev-lib",
+        "kartik-v/yii2-markdown": "dev-master",
+        "kartik-v/yii2-editable": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

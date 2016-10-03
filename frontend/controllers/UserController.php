@@ -215,16 +215,17 @@ class UserController extends Controller
 
     public function actionNewReport($courseID = null)
     {
-        $model = new Report();
+        $model = Report::create($courseID);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', 'Report saved.');
             $model = Report::create($courseID);
         }
 
-        $data = (new Query())->select(['cls.courseID', 'c.start', 'c.duration', 'c.end'])->from('classtable cls')
-            ->where(['studentID' => Yii::$app->user->identity->id])
-            ->innerJoin('course c', 'cls.courseID=c.courseID AND DATE(c.end) <= CURDATE()')
+        $data = (new Query())->select(['cls.courseID', 'c.start', 'c.duration', 'c.end'])->from('volunteer cls')
+            ->innerJoin('course c', 'cls.courseID=c.courseID')
+            ->where(['cls.studentID' => Yii::$app->user->identity->id])
+            ->andWhere('CURDATE() BETWEEN  DATE(c.start) AND DATE(c.end)')
             ->orderBy('c.start DESC')->all();
         $courses = ArrayHelper::map($data, 'courseID',
             function ($model, $defaultValue) {

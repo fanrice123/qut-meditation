@@ -93,8 +93,18 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+        if ($model->load(Yii::$app->request->post())) {
+            switch ($model->login()) {
+                case 'b':
+                    Yii::$app->session->setFlash('danger','Account Banned.');
+                    break;
+                case 's':
+                    $this->goBack();
+                    break;
+            }
+            return $this->render('login', [
+                'model' => $model,
+            ]);
         } else {
             return $this->render('login', [
                 'model' => $model,
@@ -190,7 +200,8 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
+                    Yii::$app->session->setFlash('success', 'You have successfully registered. Now please enroll your first course.');
+                    return $this->actionCourse();
                 }
             }
         }

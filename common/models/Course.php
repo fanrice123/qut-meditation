@@ -13,6 +13,7 @@ use yii\db\ActiveRecord;
  * @property integer $duration
  * @property string $end
  * @property integer $student_max
+ * @property integer $waitList
  */
 class Course extends ActiveRecord
 {
@@ -31,7 +32,7 @@ class Course extends ActiveRecord
     public function rules()
     {
         return [
-            [['start', 'duration', 'end'], 'required'],
+            [['start', 'duration', 'end', 'waitList'], 'required'],
             [['start', 'end'], 'safe'],
             [['duration'], 'integer'],
             ['student_max', 'integer', 'min' => 3, 'max' => 100],
@@ -51,6 +52,7 @@ class Course extends ActiveRecord
             'duration' => 'Duration',
             'end' => 'End',
             'student_max' => 'Maximum number of student',
+            'waitList' => 'Maximum number of student in waitlist',
         ];
     }
 }

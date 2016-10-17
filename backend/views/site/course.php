@@ -35,6 +35,7 @@ use kartik\date\DatePicker;
         ['prompt'=>'Select course duration'])
     ?>
     <?= $form->field($model, 'student_max') ?>
+    <?= $form->field($model, 'waitList') ?>
     
         <div class="form-group">
             <?= Html::submitButton('Create Course', ['class' => 'btn btn-primary',

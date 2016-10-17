@@ -12,9 +12,11 @@ use yii\db\ActiveRecord;
  * @property string $start
  * @property integer $duration
  * @property string $end
+ * @property integer $student_max
  */
 class Course extends ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -32,7 +34,8 @@ class Course extends ActiveRecord
             [['start', 'duration', 'end'], 'required'],
             [['start', 'end'], 'safe'],
             [['duration'], 'integer'],
-            ['duration', 'safe']
+            ['student_max', 'integer', 'min' => 3, 'max' => 100],
+            ['duration', 'safe'],
         ];
 
     }
@@ -47,6 +50,7 @@ class Course extends ActiveRecord
             'start' => 'Start',
             'duration' => 'Duration',
             'end' => 'End',
+            'student_max' => 'Maximum number of student',
         ];
     }
 }

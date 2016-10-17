@@ -88,24 +88,37 @@ $this->params['fluid'] = true;
                                     ->where(['studentID' => Yii::$app->user->identity->id])
                                     ->andWhere('DATE(end) <= CURDATE()')->one();
                                 if (!empty($isOldStudent)) {
-                                    $result = common\models\Student::find()->where(['courseID' => $model->courseID, 'studentID' => Yii::$app->user->identity->id])->all();
-                                    return empty($result) ? Html::a(
-                                        'Enroll Now',
-                                        ['/site/enroll', 'id' => $model->courseID, 'startDate' => $model->start, 'endDate' => $model->end],
-                                        [
-                                            'class' => 'list-group-item list-group-item-success',
-                                            'title' => 'Enroll the course now!'
-                                        ]
-                                    ) : '<a href="#" title="You have already enrolled this course." class="list-group-item disabled">Enrolled</a>';
+                                    $result = common\models\Student::find()->where(['courseID' => $model->courseID, 'studentID' => Yii::$app->user->identity->id])->one();
+                                    return empty($result) ? (
+                                        Html::a(
+                                            'Enroll Now', ['/site/enroll', 'id' => $model->courseID, 'startDate' => $model->start, 'endDate' => $model->end],
+                                            [
+                                                'class' => 'list-group-item list-group-item-success',
+                                                'title' => 'Enroll the course now!'
+                                            ]
+                                        )
+                                    ) : (
+                                        $result['pending'] ? (
+                                            '<a href="#" title="Unfortunately the class is already full. However, You have been added into waitlist. If there is any extra space, we will notice you. Thank you." class="list-group-item list-group-item-warning">Pending</a>'
+                                        ) : (
+                                            '<a href="#" title="You have already enrolled this course." class="list-group-item disabled">Enrolled</a>'
+                                        )
+                                    );
                                 } else {
-                                    return $model['duration']==10 ? Html::a(
-                                        'Enroll Now',
-                                        ['/site/enroll', 'id' => $model->courseID, 'startDate' => $model->start, 'endDate' => $model->end],
-                                        [
-                                            'class' => 'list-group-item list-group-item-success',
-                                            'title' => 'Enroll the course now!'
-                                        ]
-                                    ) : '<a href="#" title="You have to enroll and complete your first 10-day course before able to enroll 3 & 30 days course." class="list-group-item disabled">Enroll Now</a>';
+                                    $result = common\models\Student::find()->where(['courseID' => $model->courseID, 'studentID' => Yii::$app->user->identity->id])->one();
+                                    return $model['duration']==10 ? (
+                                            $result['pending'] ? (
+                                                    '<a href="#" title="Unfortunately the class is already full. However, You have been added into waitlist. If there is any extra space, we will notice you. Thank you." class="list-group-item list-group-item-warning">Pending</a>'
+                                                ) : (
+                                                Html::a(
+                                                    'Enroll Now',
+                                                    ['/site/enroll', 'id' => $model->courseID, 'startDate' => $model->start, 'endDate' => $model->end],
+                                                    [
+                                                        'class' => 'list-group-item list-group-item-success',
+                                                        'title' => 'Enroll the course now!'
+                                                    ])
+                                                )
+                                    ) : ('<a href="#" title="You have to enroll and complete your first 10-day course before able to enroll 3 & 30 days course." class="list-group-item disabled">Enroll Now</a>');
                                 }
                             }
                         }

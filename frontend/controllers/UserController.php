@@ -15,6 +15,7 @@ use yii\data\ActiveDataProvider;
 use common\models\Report;
 use yii\db\Query;
 use kartik\markdown\Markdown;
+use common\models\Course;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -237,6 +238,57 @@ class UserController extends Controller
             'model' => $model,
             'courses' => $courses,
             'courseID' => $courseID
+        ]);
+    }
+
+    public function actionCurrentEnrollment()
+    {
+
+        /*
+         *  SELECT cls.studentID, cls.courseID, c.start, c.duration, c.end
+         *  FROM classtable cls
+         *  WHERE studentID = Yii->$app->user->identity->id
+         *  INNER JOIN course c
+         *  ON cls.courseID = c.courseID AND c.start > 'today';
+         */
+
+        $current = (new Query())->select(['cls.courseID'])->from('classtable cls')
+            ->innerJoin('course c', 'cls.courseID=c.courseID')
+            ->where(['cls.studentID' => Yii::$app->user->identity->id])
+            ->andWhere('CURDATE() BETWEEN  DATE(c.start) AND DATE(c.end)')
+            ->one();
+        $current = Course::findOne(['courseID' => $current['courseID']]);
+
+        $classmates = (new Query())->select(['CONCAT(u.firstName, \' \', u.lastName) AS name'])->from('classtable cls')
+            ->innerJoin('course c', 'cls.courseID=c.courseID')
+            ->innerJoin('user u', 'u.id=cls.studentID')
+            ->where('cls.studentID !=' . Yii::$app->user->identity->id)
+            ->andWhere('CURDATE() BETWEEN  DATE(c.start) AND DATE(c.end)')
+            ->all();
+
+        $volunteers = (new Query())->select(['CONCAT(u.firstName, \' \', u.lastName) AS name'])->from('volunteer cls')
+            ->innerJoin('course c', 'cls.courseID=c.courseID')
+            ->innerJoin('user u', 'u.id=cls.studentID')
+            ->andWhere('CURDATE() BETWEEN  DATE(c.start) AND DATE(c.end)')
+            ->all();
+
+        // convert retrieved tables into strings, which is the participants' name.
+        $classmatesName = null;
+        foreach ($classmates as $key => $name) {
+            $classmatesName .= $name['name'].', ';
+        }
+        $classmatesName = rtrim($classmatesName, ', ');
+
+        $volunteersName = null;
+        foreach ($volunteers as $key => $name) {
+            $volunteersName .= $name['name'].', ';
+        }
+        $volunteersName = rtrim($volunteersName, ', ');
+
+        return $this->render('currentEnrollment', [
+            'model' => $current,
+            'classmates' => $classmatesName,
+            'volunteers' => $volunteersName,
         ]);
     }
 }

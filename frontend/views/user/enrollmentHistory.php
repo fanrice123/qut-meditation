@@ -22,9 +22,7 @@ $this->params['fluid'] = true;
     <br>
     <div class="list-group">
         <?= Html::a('<i class="glyphicon glyphicon-menu-right"></i>All Enrollments', ['user/all-enrollments'], ['class' => 'list-group-item']) ?>
-        <a href="#" class="list-group-item">
-            <i class="glyphicon glyphicon-menu-right"></i>Ongoing Course
-        </a>
+        <?= Html::a('<i class="glyphicon glyphicon-menu-right"></i>Ongoing Course', ['user/current-enrollment'], ['class' => 'list-group-item']) ?>
         <?= Html::a('<i class="glyphicon glyphicon-menu-right"></i>Upcoming Courses', ['user/upcoming-enrollments'], ['class' => 'list-group-item']) ?>
         <?= Html::a('<i class="glyphicon glyphicon-menu-right"></i>Finished Courses', ['user/enrollment-history'], ['class' => 'list-group-item active']) ?>
     </div>

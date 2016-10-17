@@ -13,12 +13,33 @@ use backend\validators\DateRangeValidator;
  * @property string $start
  * @property integer $duration
  * @property string $end
+ * @property integer $student_max
  */
 class CreateCourseForm extends Model
 {
-
     public $start;
     public $duration;
+    public $student_max;
+
+    public function __construct(array $config = [])
+    {
+        $this->student_max = 20;
+        parent::__construct($config);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'courseID' => 'Course ID',
+            'start' => 'Start',
+            'duration' => 'Course Duration',
+            'end' => 'End',
+            'student_max' => 'Maximum Number of Student',
+        ];
+    }
 
     /**
      * @inheritdoc
@@ -31,6 +52,8 @@ class CreateCourseForm extends Model
             ['start', 'date', 'format' => 'yyyy-mm-dd'],
             ['start', 'unique', 'targetClass' => '\common\models\Course', 'message' => 'There is already a course conducting on that day.'],
             ['start', DateRangeValidator::className()],
+            ['student_max', 'integer', 'min' => 3, 'max' => 100],
+
             //[['start', 'end', 'duration'], 'safe']
         ];
     }
@@ -54,6 +77,7 @@ class CreateCourseForm extends Model
         $duration = ($temp - 1);
         $duration = ' + '.$duration;
         $duration = $duration.' days';
+        $course->student_max = $this->student_max;
 
         $course->end = date('Y-m-d', strtotime($this->start . $duration));
 

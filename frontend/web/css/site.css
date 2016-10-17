@@ -26,6 +26,7 @@ body {
     color: #b3b3b3;
     box-shadow: 10px 10px 5px #14141f;
     border-radius: 15px 15px 0px 0px;
+    float: bottom;
 }
 
 .jumbotron {
@@ -186,4 +187,9 @@ div.desc {
 
 .list-group .glyphicon {
     float: right;
+}
+
+form div.required label.control-label:after {
+    content:" * ";
+    color:red;
 }

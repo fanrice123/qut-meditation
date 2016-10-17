@@ -9,7 +9,7 @@ use yii\db\ActiveRecord;
  * This is the model class for table "classtable".
  *
  * @property integer $courseID
- * @property integer $studentID
+ * @property boolean $pending
  *
  * @property User $student
  * @property Course $course
@@ -34,6 +34,7 @@ class Student extends ActiveRecord
             [['courseID', 'studentID'], 'integer'],
             [['studentID'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['studentID' => 'id']],
             [['courseID'], 'exist', 'skipOnError' => true, 'targetClass' => Course::className(), 'targetAttribute' => ['courseID' => 'courseID']],
+            ['pending', 'safe']
         ];
     }
 

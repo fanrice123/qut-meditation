@@ -284,17 +284,26 @@ class SiteController extends Controller
             $student->courseID = $id;
 
             $studentAmount = Student::find()->where(['courseID' => $id])->count();
-            $maxStudent = Course::findOne(['courseID' => $id])->student_max;
+            $course = Course::findOne(['courseID' => $id]);
+            $maxStudent = $course->student_max;
             $student->pending =  ($studentAmount == $maxStudent);
+            $waitlistFull = false;
+            if ($student->pending) {
+                $waitlistCount = Student::find()->where(['courseID' => $id, 'pending' => 1])->count();
+                $waitlistFull = ($course->waitList == $waitlistCount);
+            }
 
-            if ($student->save()) {
+            if (!$waitlistFull && $student->save()) {
                 if ($student->pending)
                     Yii::$app->session->setFlash('warning', 'Unfortunately the class on '. $startDate .' that you have picked is full. However, you have been added into waitlist. If there is any extra slot available, we will inform you. Thank you.');
                 else
                     Yii::$app->session->setFlash('success', 'You have successfully enrolled the class starting on '.$startDate);
             }
             else {
-                Yii::$app->session->setFlash('warning', 'Sorry, Error caused.\nEnrollment failed.');
+                $message = 'Sorry. Enrollment failed.';
+                if ($waitlistFull)
+                    $message .= ' The enrollment is no longer available since the class and waiting list is full.';
+                Yii::$app->session->setFlash('warning', $message);
             }
         } else {
             if ($startDate == $studentTable['start']){

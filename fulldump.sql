@@ -16,14 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `meditation`
---
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `meditation` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
-
-USE `meditation`;
-
---
 -- Table structure for table `classtable`
 --
 
@@ -33,6 +25,7 @@ DROP TABLE IF EXISTS `classtable`;
 CREATE TABLE `classtable` (
   `courseID` int(11) NOT NULL,
   `studentID` int(11) NOT NULL,
+  `pending` tinyint(1) NOT NULL,
   KEY `studentID` (`studentID`),
   KEY `courseID` (`courseID`),
   CONSTRAINT `classtable_ibfk_1` FOREIGN KEY (`studentID`) REFERENCES `user` (`id`),
@@ -46,7 +39,7 @@ CREATE TABLE `classtable` (
 
 LOCK TABLES `classtable` WRITE;
 /*!40000 ALTER TABLE `classtable` DISABLE KEYS */;
-INSERT INTO `classtable` VALUES (30,13),(31,1),(30,1),(35,1);
+INSERT INTO `classtable` VALUES (30,13,1),(31,1,1),(30,1,1),(35,1,0),(39,3,0),(39,4,0),(39,5,0);
 /*!40000 ALTER TABLE `classtable` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,8 +55,10 @@ CREATE TABLE `course` (
   `start` date NOT NULL,
   `duration` int(11) NOT NULL,
   `end` date NOT NULL,
+  `student_max` int(11) NOT NULL,
+  `waitList` int(11) NOT NULL,
   PRIMARY KEY (`courseID`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,8 +67,34 @@ CREATE TABLE `course` (
 
 LOCK TABLES `course` WRITE;
 /*!40000 ALTER TABLE `course` DISABLE KEYS */;
-INSERT INTO `course` VALUES (30,'2016-10-06',10,'2016-10-15'),(31,'2016-09-30',3,'2016-10-02'),(32,'2016-09-15',30,'2016-10-14'),(34,'2016-10-08',10,'2016-10-17'),(35,'2016-10-18',10,'2016-10-27'),(36,'2016-11-28',3,'2016-11-30');
+INSERT INTO `course` VALUES (30,'2016-10-06',10,'2016-10-15',20,10),(31,'2016-09-30',3,'2016-10-02',15,10),(32,'2016-09-15',30,'2016-10-14',40,10),(34,'2016-10-08',10,'2016-10-17',20,10),(35,'2016-10-18',10,'2016-10-27',15,10),(36,'2016-11-28',3,'2016-11-30',20,10),(38,'2016-10-21',3,'2016-10-23',19,10),(39,'2016-10-31',3,'2016-11-02',3,0),(40,'2016-10-19',3,'2016-10-21',20,10);
 /*!40000 ALTER TABLE `course` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `email`
+--
+
+DROP TABLE IF EXISTS `email`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `email` (
+  `emailID` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sender` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `receiver` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`emailID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `email`
+--
+
+LOCK TABLES `email` WRITE;
+/*!40000 ALTER TABLE `email` DISABLE KEYS */;
+/*!40000 ALTER TABLE `email` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -204,7 +225,7 @@ CREATE TABLE `volunteer` (
 
 LOCK TABLES `volunteer` WRITE;
 /*!40000 ALTER TABLE `volunteer` DISABLE KEYS */;
-INSERT INTO `volunteer` VALUES (1,31),(1,34),(6,30),(1,32),(1,35);
+INSERT INTO `volunteer` VALUES (6,30);
 /*!40000 ALTER TABLE `volunteer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -217,4 +238,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-05  1:52:49
+-- Dump completed on 2016-10-18  4:47:06

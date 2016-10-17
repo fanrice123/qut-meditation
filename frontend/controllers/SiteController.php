@@ -181,7 +181,7 @@ class SiteController extends Controller
     {
 
         $dataProvider = new ActiveDataProvider([
-            'query' => Course::find()->where('DATE(start) > \''.date('Y-m-d').'\'')->orderBy('start'),
+            'query' => Course::find()->where('DATE(start) > CURDATE()')->orderBy('start'),
             'sort' => false,
             'pagination' => ['pageSize' => 10]
         ]);

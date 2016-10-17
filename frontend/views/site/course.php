@@ -5,6 +5,8 @@ use yii\widgets\ActiveForm;
 use yii\widgets\LinkPager;
 use kartik\grid\GridView;
 use common\models\Course;
+use yii\db\Query;
+use common\models\User;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider; */
@@ -68,6 +70,44 @@ $this->params['fluid'] = true;
                     }
                 ],
                 [
+                    'class'=>'kartik\grid\ExpandRowColumn',
+                    'enableRowClick' => true,
+                    'expandTitle' => 'view volunteers',
+                    'width'=>'100px',
+                    'value'=>function ($model, $key, $index, $column) {
+                        return GridView::ROW_COLLAPSED;
+                    },
+                    'detail'=>function ($model, $key, $index, $column) {
+                        $result = (new Query())->select(['cls.courseID' ,'CONCAT(u.firstName, \' \', u.lastName) AS name'])->from('volunteer cls')
+                            ->innerJoin('course c', 'cls.courseID=c.courseID')
+                            ->innerJoin('user u', 'u.id=cls.studentID')
+                            ->where(['cls.courseID' => $model->courseID])
+                            ->all();
+                        /*$subQuery = (new Query())->select(['cls.studentID', 'cls.courseID'])->from('volunteer cls')
+                            ->where(['cls.courseID' => $model->courseID])
+                            ->innerJoin('course c', 'cls.courseID=c.courseID');
+
+                        $result = (new Query())->select(['CONCAT(u.firstName, \' \', u.lastName) AS name'])
+                            ->from(['t' => $subQuery])
+                            ->innerJoin('user u', 'u.id=cls.studentID')->all();*/
+                        $volunteers = null;
+                        foreach ($result as $key => $name) {
+                            $volunteers .= $name['name'].', ';
+                        }
+                        if (empty($volunteers)) {
+                            $volunteers = '<i>Currenty not accessible.</i>';
+                        } else {
+                            $volunteers = rtrim($volunteers, ', ');
+                        }
+                        return Yii::$app->controller->renderPartial('_expand-row-volunteers', [
+                            'volunteers'=>$volunteers,
+                            'model'=>$model,
+                        ]);
+                    },
+                    'headerOptions'=>['class'=>'kartik-sheet-style'],
+                    'expandOneOnly'=>true
+                ],
+                [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{enroll}',
                     'options' => ['style' => 'width:20%'],
@@ -125,9 +165,8 @@ $this->params['fluid'] = true;
                     ],
                 ]
             ]
-    ]) ?>
-
-
+        ]) ?>
     </div>
+</div>
 
 </div><!-- course -->

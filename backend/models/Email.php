@@ -11,7 +11,8 @@ use Yii;
  * @property string $title
  * @property string $sender
  * @property string $receiver
- * @property string $time
+ * @property string content
+ * @property string attachments
  */
 class Email extends \yii\db\ActiveRecord
 {
@@ -30,8 +31,8 @@ class Email extends \yii\db\ActiveRecord
     {
         return [
             [['title', 'sender', 'receiver'], 'required'],
-            [['receiver'], 'string'],
-            [['time'], 'safe'],
+            [['receiver'], 'email'],
+            [['time', 'content', 'attachments'], 'safe'],
             [['title', 'sender'], 'string', 'max' => 255],
         ];
     }
@@ -42,7 +43,6 @@ class Email extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'emailID' => 'Email ID',
             'title' => 'Title',
             'sender' => 'Sender',
             'receiver' => 'Receiver',

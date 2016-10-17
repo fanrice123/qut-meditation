@@ -9,7 +9,6 @@ use backend\validators\DateRangeValidator;
 /**
  * This is the model class for table "course".
  *
- * @property integer $courseID
  * @property string $start
  * @property integer $duration
  * @property string $end

@@ -10,6 +10,11 @@ use yii\filters\AccessControl;
 use common\models\AdminLoginForm;
 use common\models\CreateCourseForm;
 use common\models\Report;
+use backend\models\EmailForm;
+use yii\web\Response;
+use yii\db\Query;
+use common\models\User;
+use yii\helpers\ArrayHelper;
 
 /**
  * Site controller
@@ -30,7 +35,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'course', 'report'],
+                        'actions' => ['logout', 'index', 'course', 'report', 'write-email'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -107,16 +112,16 @@ class SiteController extends Controller
         $model = new CreateCourseForm();
 
         if ($model->load(Yii::$app->request->post())) {
-           if ($model->createCourse()) {
+            if ($model->createCourse()) {
                 // form inputs are valid, do something here
-               Yii::$app->session->setFlash('success', 'You have successfully create a class starting on '
-                                                        .$model->start.' with duration of '.$model->duration.' day'
-                                                        .($model->duration == 1 ? '.' : 's.')
-               );
+                Yii::$app->session->setFlash('success', 'You have successfully create a class starting on '
+                    . $model->start . ' with duration of ' . $model->duration . ' day'
+                    . ($model->duration == 1 ? '.' : 's.')
+                );
             } else {
-               Yii::$app->session->setFlash('danger', 'Course creating failed, please recheck your input(s). '
-                                                      .'If you assure that the inputs are valid, please contact database administrator.');
-           }
+                Yii::$app->session->setFlash('danger', 'Course creating failed, please recheck your input(s). '
+                    . 'If you assure that the inputs are valid, please contact database administrator.');
+            }
         }
         return $this->render('course', [
             'model' => $model,
@@ -139,6 +144,35 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionWriteEmail()
+    {
+        $model = new EmailForm();
+
+        $query = User::find()->select(['id', 'firstName', 'lastName', 'username', 'email'])->all();
+
+        $users = ArrayHelper::map($query, 'email',
+            function ($model, $defaultValue) {
+                return $model['firstName'] . ' ' . $model['lastName'] . ', (' . $model['username'] . ') ' . $model['email'] . ', ID: ' . $model['id'];
+            }
+        );
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                // form inputs are valid, do something here
+                $model->uploadAttachments();
+                $success = $model->createEmails();
+                if ($success)
+                    Yii::$app->session->setFlash('success', 'You have successfully sent the email.');
+                else
+                    Yii::$app->session->setFlash('danger', 'Email failed to send.');
+                $model = new EmailForm();
+            }
+        }
+
+        return $this->render('writeEmail', [
+            'model' => $model,
+            'users' => $users,
+        ]);
+    }
 }
 
 

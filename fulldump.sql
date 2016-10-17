@@ -83,6 +83,8 @@ CREATE TABLE `email` (
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `sender` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `receiver` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `attachments` text COLLATE utf8mb4_unicode_ci,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`emailID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -238,4 +240,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-18  4:47:06
+-- Dump completed on 2016-10-18  9:21:32

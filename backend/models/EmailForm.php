@@ -16,11 +16,11 @@ use yii\web\UploadedFile;
  * @property string $sender
  * @property string $receivers
  * @property string $time
- * @property string attachments
+ * @property string attachment
  */
 class EmailForm extends Model
 {
-    public $title, $sender, $receivers, $time, $content, $attachments;
+    public $title, $sender, $receivers, $time, $content, $attachment;
     public $alteredAttach;
 
     public function __construct(array $config = [])
@@ -41,7 +41,7 @@ class EmailForm extends Model
             [['receivers'], 'emailsValidation'],
             [['time', 'content'], 'safe'],
             [['title', 'sender'], 'string', 'max' => 255],
-            ['attachments', 'file', 'skipOnEmpty' => true, 'maxFiles' => 0],
+            [['attachment'], 'file', 'skipOnEmpty' => false],
         ];
     }
 
@@ -57,7 +57,7 @@ class EmailForm extends Model
             'receivers' => 'To',
             'time' => 'Time',
             'content' => 'Content',
-            'attachments' => 'Attachments',
+            'attachment' => 'Attachments',
         ];
     }
 
@@ -70,17 +70,14 @@ class EmailForm extends Model
         }
     }
 
-    public function uploadAttachments()
+    public $imageFile;
+    public function upload()
     {
-        $this->attachments = UploadedFile::getInstance($this, 'attachments');
-
-        foreach ($this->attachments as $file) {
-            $alteredName = 'emailAttach/'.Yii::$app->security->generateRandomString();
-            $file->saveAs($alteredName.'.'.$file->extension);
-            if (empty($this->alteredAttach))
-                $this->alteredAttach = [$alteredName];
-            else
-                $this->alteredAttach[] = $alteredName;
+        if ($this->validate()) {
+            $this->attachment->saveAs('uploads/' . Yii::$app->security->generateRandomString() . '.' . $this->attachment->extension);
+            return true;
+        } else {
+            return false;
         }
     }
 

@@ -15,6 +15,7 @@ use yii\web\Response;
 use yii\db\Query;
 use common\models\User;
 use yii\helpers\ArrayHelper;
+use yii\web\UploadedFile;
 
 /**
  * Site controller
@@ -155,22 +156,27 @@ class SiteController extends Controller
                 return $model['firstName'] . ' ' . $model['lastName'] . ', (' . $model['username'] . ') ' . $model['email'] . ', ID: ' . $model['id'];
             }
         );
+        $get = [];
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
+
                 // form inputs are valid, do something here
-                $model->uploadAttachments();
-                $success = $model->createEmails();
+            $model->attachment = UploadedFile::getInstance($model, 'attachment');
+            if ($model->upload()) {
+                // file is uploaded successfully
+                //$success = $model->createEmails();
+                $model = new EmailForm();
+                $success = true;
                 if ($success)
                     Yii::$app->session->setFlash('success', 'You have successfully sent the email.');
                 else
                     Yii::$app->session->setFlash('danger', 'Email failed to send.');
-                $model = new EmailForm();
             }
         }
 
         return $this->render('writeEmail', [
             'model' => $model,
             'users' => $users,
+            'g' => $model->attachment,
         ]);
     }
 }

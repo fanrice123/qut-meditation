@@ -11,8 +11,8 @@ use Yii;
  * @property string $title
  * @property string $sender
  * @property string $receiver
- * @property string content
- * @property string attachments
+ * @property string $content
+ * @property string $attachments
  */
 class Email extends \yii\db\ActiveRecord
 {

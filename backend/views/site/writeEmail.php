@@ -14,8 +14,7 @@ use yii\helpers\Url;
 $url = Url::to(['userlist']);
 ?>
 <div class="writeEmail">
-
-    <?= var_dump($g); ?>
+    
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
         <?= $form->field($model, 'title') ?>
         <?= $form->field($model, 'sender')->textInput(['readonly' => true]) ?>

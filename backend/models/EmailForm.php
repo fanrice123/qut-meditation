@@ -94,6 +94,7 @@ class EmailForm extends Model
         $email->sender = $this->sender;
         $email->receiver = implode(' ', $this->receivers);
         $email->content = $this->content;
+        $email->attachments = $this->newFileName;
 
         $email->save();
 
@@ -106,7 +107,8 @@ class EmailForm extends Model
         if ($this->newFileName)
             $message->attach($this->newFileName);
 
-        return $message->send();
+        $message->send();
+        return true;
 
     }
 }

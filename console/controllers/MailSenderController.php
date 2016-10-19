@@ -60,6 +60,6 @@ class MailSenderController extends Controller
             }
         }
         echo 'Sending email job done. Sent total of '.$total.' mail(s).'.PHP_EOL;
-	echo PHP_EOL;
+	    echo PHP_EOL;
     }
 }

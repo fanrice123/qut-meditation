@@ -159,17 +159,18 @@ class SiteController extends Controller
         $get = [];
         if ($model->load(Yii::$app->request->post())) {
 
-                // form inputs are valid, do something here
+            // form inputs are valid, do something here
             $model->attachment = UploadedFile::getInstance($model, 'attachment');
             if ($model->upload()) {
                 // file is uploaded successfully
-                //$success = $model->createEmails();
-                $model = new EmailForm();
-                $success = true;
+                $success = $model->createEmails();
                 if ($success)
                     Yii::$app->session->setFlash('success', 'You have successfully sent the email.');
                 else
                     Yii::$app->session->setFlash('danger', 'Email failed to send.');
+                $model = new EmailForm();
+            } else {
+                Yii::$app->session->setFlash('danger', 'Email failed to send due to the upload issue of attachment. Please try again.');
             }
         }
 

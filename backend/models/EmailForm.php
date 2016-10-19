@@ -16,16 +16,18 @@ use yii\web\UploadedFile;
  * @property string $sender
  * @property string $receivers
  * @property string $time
- * @property string attachment
+ * @property UploadedFile|string attachment
+ * @property string|bool newFileName
  */
 class EmailForm extends Model
 {
-    public $title, $sender, $receivers, $time, $content, $attachment;
-    public $alteredAttach;
+    public $title, $sender, $receivers, $time, $content;
+
+    public $attachment, $newFileName;
 
     public function __construct(array $config = [])
     {
-        $this->alteredAttach = [];
+        $this->newFileName = false;
         $user = Yii::$app->user->identity;
         $this->sender = $user->lastName.'.'.$user->firstName.'@omedi.org.au';
         parent::__construct($config);
@@ -70,14 +72,18 @@ class EmailForm extends Model
         }
     }
 
-    public $imageFile;
+    /**
+     * @return bool|string if save file successfully then return file name otherwise return false
+     */
     public function upload()
     {
         if ($this->validate()) {
-            $this->attachment->saveAs('uploads/' . Yii::$app->security->generateRandomString() . '.' . $this->attachment->extension);
-            return true;
+            if (!empty($this->attachment)) {
+                $this->newFileName = 'uploads/' . Yii::$app->security->generateRandomString() . '.' . $this->attachment->extension;
+                return $this->attachment->saveAs($this->newFileName) ? $this->newFileName : false;
+            }
         } else {
-            return false;
+            return true;
         }
     }
 
@@ -97,9 +103,8 @@ class EmailForm extends Model
             ->setSubject($this->title)
             ->setTextBody($this->content);
 
-        foreach ($this->alteredAttach as $key => $file) {
-            $message->attach($file);
-        }
+        if ($this->newFileName)
+            $message->attach($this->newFileName);
 
         return $message->send();
 

@@ -129,22 +129,6 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionReport()
-    {
-        $model = new Report();
-
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
-                // form inputs are valid, do something here
-                return;
-            }
-        }
-
-        return $this->render('report', [
-            'model' => $model,
-        ]);
-    }
-
     public function actionWriteEmail()
     {
         $model = new EmailForm();
@@ -156,28 +140,29 @@ class SiteController extends Controller
                 return $model['firstName'] . ' ' . $model['lastName'] . ', (' . $model['username'] . ') ' . $model['email'] . ', ID: ' . $model['id'];
             }
         );
-        $get = [];
-        if ($model->load(Yii::$app->request->post())) {
 
+        if ($model->load(Yii::$app->request->post())) {
+            $success = false;
             // form inputs are valid, do something here
-            $model->attachment = UploadedFile::getInstance($model, 'attachment');
-            if ($model->upload()) {
-                // file is uploaded successfully
-                $success = $model->createEmails();
+            if ($model->validate()) {
+                $model->attachment = UploadedFile::getInstance($model, 'attachment');
+                if (!is_null($model->attachment)) {
+                    $filePath = $model->upload();
+                    $success = $model->createEmails($filePath);
+                } else {
+                    $success = $model->createEmails();
+                }
                 if ($success)
                     Yii::$app->session->setFlash('success', 'You have successfully sent the email.');
                 else
                     Yii::$app->session->setFlash('danger', 'Email failed to send.');
-                $model = new EmailForm();
-            } else {
-                Yii::$app->session->setFlash('danger', 'Email failed to send due to the upload issue of attachment. Please try again.');
             }
         }
 
         return $this->render('writeEmail', [
             'model' => $model,
             'users' => $users,
-            'g' => $model->attachment,
+            'g' => $model->receivers,
         ]);
     }
 }

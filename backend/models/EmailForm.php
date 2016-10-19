@@ -43,7 +43,7 @@ class EmailForm extends Model
             [['receivers'], 'emailsValidation'],
             [['time', 'content'], 'safe'],
             [['title', 'sender'], 'string', 'max' => 255],
-            [['attachment'], 'file', 'skipOnEmpty' => false],
+            [['attachment'], 'file', 'skipOnEmpty' => true],
         ];
     }
 
@@ -77,24 +77,19 @@ class EmailForm extends Model
      */
     public function upload()
     {
-        if ($this->validate()) {
-            if (!empty($this->attachment)) {
-                $this->newFileName = 'uploads/' . Yii::$app->security->generateRandomString() . '.' . $this->attachment->extension;
-                return $this->attachment->saveAs($this->newFileName) ? $this->newFileName : false;
-            }
-        } else {
-            return true;
+        if (!empty($this->attachment)) {
+            $newFilePath = 'uploads/' . Yii::$app->security->generateRandomString() . '.' . $this->attachment->extension;
+            return $this->attachment->saveAs($this->newFileName) ? $newFilePath : null;
         }
     }
 
-    public function createEmails()
+    public function createEmails($filePath = null)
     {
         $email = new Email();
         $email->title = $this->title;
         $email->sender = $this->sender;
         $email->receiver = implode(' ', $this->receivers);
         $email->content = $this->content;
-        $email->attachments = $this->newFileName;
 
         $email->save();
 
@@ -104,11 +99,9 @@ class EmailForm extends Model
             ->setSubject($this->title)
             ->setTextBody($this->content);
 
-        if ($this->newFileName)
+        if ($filePath)
             $message->attach($this->newFileName);
 
-        $message->send();
-        return true;
-
+        return $message->send();
     }
 }

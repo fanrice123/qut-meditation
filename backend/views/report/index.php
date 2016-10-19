@@ -13,6 +13,7 @@ use kartik\date\DatePicker;
 
 $this->title = 'Reports';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="report-index">
 
@@ -22,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Report', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+
 
 <?php Pjax::begin(); ?>
     <?= GridView::widget([

@@ -85,7 +85,6 @@ class SiteController extends Controller
         }
 
         $model = new AdminLoginForm();
-        $test = new Course();
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();

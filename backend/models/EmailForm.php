@@ -23,11 +23,10 @@ class EmailForm extends Model
 {
     public $title, $sender, $receivers, $time, $content;
 
-    public $attachment, $newFileName;
+    public $attachment;
 
     public function __construct(array $config = [])
     {
-        $this->newFileName = false;
         $user = Yii::$app->user->identity;
         $this->sender = $user->lastName.'.'.$user->firstName.'@omedi.org.au';
         parent::__construct($config);
@@ -79,7 +78,7 @@ class EmailForm extends Model
     {
         if (!empty($this->attachment)) {
             $newFilePath = 'uploads/' . Yii::$app->security->generateRandomString() . '.' . $this->attachment->extension;
-            return $this->attachment->saveAs($this->newFileName) ? $newFilePath : null;
+            return $this->attachment->saveAs($newFilePath) ? $newFilePath : null;
         }
     }
 
@@ -100,7 +99,7 @@ class EmailForm extends Model
             ->setTextBody($this->content);
 
         if ($filePath)
-            $message->attach($this->newFileName);
+            $message->attach($filePath);
 
         return $message->send();
     }

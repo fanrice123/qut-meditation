@@ -33,6 +33,7 @@ class MailSenderController extends Controller
             $content .= "  We would just like to tell you that you have participated a " . $recipient["duration"] .
                 " days meditation course on " . $recipient["start"] . ".\n" .
                 "To confirm your attendance, please contact our manager. Mr. xxxxx with contact number blablabla\n".
+                "If you cannot attend that course and would like to cancel the enrollment, you can go to our website to cancel the enrollment just through a simple process.".
                 "See you on that day!\n" .
 
                 $content .= "\n\n";

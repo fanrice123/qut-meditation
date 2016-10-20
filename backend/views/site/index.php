@@ -5,9 +5,14 @@ use yii\db\Query;
 
 $this->title = 'My Yii Application';
 
+/* @var $events \yii2fullcalendar\models\Event */
 ?>
 
 <div class="site-index">
+
+    <?= \yii2fullcalendar\yii2fullcalendar::widget([
+        'events' => $events,
+    ]) ?>
 
     <div class="jumbotron">
         <h1>Congratulations!</h1>

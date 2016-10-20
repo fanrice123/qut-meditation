@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\Course;
+use common\models\WorkSchedule;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -16,6 +17,7 @@ use yii\db\Query;
 use common\models\User;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
+use yii2fullcalendar\models\Event;
 
 /**
  * Site controller
@@ -64,13 +66,44 @@ class SiteController extends Controller
     }
 
     /**
+     * @var Event;
+     */
+    private $t;
+
+    /**
+     * @var Event[[]]
+     */
+    private $schedules;
+    /**
      * Displays homepage.
      *
      * @return string
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $this->schedules = [[]];
+        $schedules = WorkSchedule::find()->all();
+        $events = [];
+        foreach ($schedules as $index => $schedule) {
+            $courseID = $schedule->courseID;
+            $this->schedules[$courseID][$index] = new Event();
+            $this->schedules[$courseID][$index]->id = $schedule->id;
+            $this->schedules[$courseID][$index]->start = $schedule->start;
+            $this->schedules[$courseID][$index]->end = $schedule->end;
+            $this->schedules[$courseID][$index]->title = 's.'.$schedule->studentID. ', '. $courseID;
+        }
+        foreach($this->schedules as $indices => $values) {
+            $rand = dechex(rand(0x000000, 0xFFFFFF));
+            $colour = '#'.$rand;
+            foreach ($values as $key => $schedule) {
+                $schedule->color = $colour;
+                $events[] = $schedule;
+            }
+        }
+
+        return $this->render('index', [
+            'events' => $events,
+        ]);
     }
 
     /**

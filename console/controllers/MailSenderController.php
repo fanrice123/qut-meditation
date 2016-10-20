@@ -21,7 +21,7 @@ class MailSenderController extends Controller
     public function actionSendMailTenDaysPrior() {
         $subQuery = (new Query())->select(['cls.studentID', 'cls.courseID', 'c.start', 'c.duration'])->from('classtable cls')
             ->innerJoin('course c', 'c.courseID=cls.courseID')
-            ->where('DATE_ADD(CURDATE(), INTERVAL 10 DAY)<c.start');
+            ->where('DATE_ADD(CURDATE(), INTERVAL 10 DAY)=c.start');
         $query = (new Query())->select(['u.firstName', 'u.lastName', 'u.email', 'upcomingCourses.*'])->from(['upcomingCourses' => $subQuery])
             ->innerJoin('user u', 'u.id=upcomingCourses.studentID');
         $recipients = $query->all();

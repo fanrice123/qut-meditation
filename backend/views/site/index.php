@@ -2,6 +2,7 @@
 
 /* @var $this yii\web\View */
 use yii\db\Query;
+use yii2fullcalendar\yii2fullcalendar;
 
 $this->title = 'My Yii Application';
 
@@ -10,11 +11,11 @@ $this->title = 'My Yii Application';
 
 <div class="site-index">
 
-    <?= \yii2fullcalendar\yii2fullcalendar::widget([
+    <?= yii2fullcalendar::widget([
         'events' => $events,
     ]) ?>
 
-    <div class="jumbotron">
+    <!--<div class="jumbotron">
         <h1>Congratulations!</h1>
 
         <p class="lead">You have successfully created your Yii-powered application.</p>
@@ -57,5 +58,5 @@ $this->title = 'My Yii Application';
             </div>
         </div>
 
-    </div>
+    </div>-->
 </div>

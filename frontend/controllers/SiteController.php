@@ -17,6 +17,9 @@ use frontend\models\ContactForm;
 use common\models\Course;
 use common\models\Student;
 use common\models\Volunteer;
+use common\models\WorkSchedule;
+use yii2fullcalendar\models\Event;
+use yii\helpers\ArrayHelper;
 
 
 /**
@@ -324,6 +327,35 @@ class SiteController extends Controller
 
         return $this->render('roster', ['dataProvider' => $dataProvider]);
 
+    }
+
+    public function actionViewRoster()
+    {
+        $schedules = WorkSchedule::find()->where(['studentID' => Yii::$app->user->id])->all();
+
+        $schedules = [[]];
+        $jobs = WorkSchedule::find()->all();
+        $events = [];
+        foreach ($jobs as $index => $schedule) {
+            $courseID = $schedule->courseID;
+            $schedules[$courseID][$index] = new Event();
+            $schedules[$courseID][$index]->id = $schedule->id;
+            $schedules[$courseID][$index]->start = $schedule->start;
+            $schedules[$courseID][$index]->end = $schedule->end;
+            $schedules[$courseID][$index]->title = 's.'.$schedule->studentID. ', '. $courseID;
+        }
+        foreach($schedules as $indices => $values) {
+            $rand = dechex(rand(0x000000, 0xFFFFFF));
+            $colour = '#'.$rand;
+            foreach ($values as $key => $schedule) {
+                $schedule->color = $colour;
+                $events[] = $schedule;
+            }
+        }
+
+        return $this->render('viewRoster', [
+            'events' => $events,
+        ]);
     }
 
     public function actionVolunteer($id, $startDate, $endDate) {

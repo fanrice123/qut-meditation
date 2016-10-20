@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\grid\GridView;
+use yii\widgets\Breadcrumbs;
+use common\widgets\Alert;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Volunteer */
@@ -13,13 +15,28 @@ $this->title = 'Course List';
 $this->params['breadcrumbs'][] = ['label' => 'Roster', 'url' => ['roster']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-roster" >
 
-    <div class="col-lg-10" id="body">
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="col-md-2">
+    <br>
+    <br>
+    <div class="list-group">
+        <?= Html::a('<i class="glyphicon glyphicon-menu-right"></i>All Roster', ['site/roster'], ['class' => 'list-group-item active']) ?>
+        <?= Html::a('<i class="glyphicon glyphicon-menu-right"></i>Roster Table', ['site/view-roster'], ['class' => 'list-group-item']) ?>
+    </div>
+</div>
 
-
-        <?= GridView::widget([
+<div class="col-md-5">
+    <div class="container">
+        <div class="site-roster" >
+            <br>
+            <br>
+            <?= Breadcrumbs::widget([
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            ]) ?>
+            <?= Alert::widget() ?>
+            <div class="col-lg-10" id="body">
+                <h1><?= Html::encode($this->title) ?></h1>
+                <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'showPageSummary' => false,
             'striped' => true,
@@ -86,6 +103,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]
             ]
         ]); ?>
+            </div>
+        </div><!-- site-roster -->
     </div>
 
-</div><!-- site-roster -->
+</div>

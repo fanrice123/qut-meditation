@@ -80,7 +80,9 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 
-    <?php if($this->context->id == 'user') : ?>
+    <?php if($this->context->id == 'user' ||
+        ($this->context->action->id == 'view-roster' ||
+         $this->context->action->id == 'roster')) : ?>
             <div class="row">
 
             <?= $content ?>

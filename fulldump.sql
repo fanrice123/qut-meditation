@@ -87,7 +87,7 @@ CREATE TABLE `email` (
   `attachments` text COLLATE utf8mb4_unicode_ci,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`emailID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,6 +96,7 @@ CREATE TABLE `email` (
 
 LOCK TABLES `email` WRITE;
 /*!40000 ALTER TABLE `email` DISABLE KEYS */;
+INSERT INTO `email` VALUES (3,'test','Istrator.Admin@omedi.org.au','test@gmail.com','tet','uploads/fUlZ8fZQBCxJdsyt8nf9YZfXW2z6zVm8.jpeg','2016-10-19 04:30:57'),(4,'Test','Istrator.Admin@omedi.org.au','test@gmail.com','TEst','uploads/NW6JsQZlfdOCOXCOPcv4fdJC1vzsCuRE.jpg','2016-10-19 04:37:16'),(5,'testetete','Istrator.Admin@omedi.org.au','fchunhuei@gmail.com','afawfafeawfawef',NULL,'2016-10-19 07:38:53');
 /*!40000 ALTER TABLE `email` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -200,7 +201,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin123',0,1,'Admin','Istrator','LnOv87CVH320bAemt3zrwXL6kPkEMaYk','$2y$13$wH9ETEBeMGim6Wf3rqzD5usLSmGkqkqcnMsPCumIgOZ5GyIPezbs2',NULL,'test@gmail.com','1995-07-12','female','61477888999',NULL,10,1473412170,1475222162,'103, Wickham Terrace',9999,'QLD','Brisbane',1,'test2\r\neafsf \r\nfaef\r\n f\r\nawefew\r\nf a\r\nf es\r\n f\r\nfew\r\naf','test'),(3,'test123',0,0,'aeffaf','Faffef','X2zXMs4OFJmIbNOP_SvmI1CTJIvZl2JD','$2y$13$KcFOQOVPn3bbFr38qa8.8ONN77KblfQVXHpCC.MJBzOEVixj2yv6G',NULL,'wsfewf@gmmm.com','2016-09-01','male','525256255522',NULL,10,1473441763,1473441763,'efgsdfgsvserfseg res grsgsdfg sdfg sfdg ',5454,'sfes','sdf gvsdg sreg',0,NULL,NULL),(4,'benNERD',0,0,'bebebebe','lalalala','3UdeCb0atfDZ3IjgjfrBdaCing9Ot9wI','$2y$13$qAwvY3Mjns.7t0bHDIf4PORsz.FnZAGpv7Do/mfSfedsRJ4hU6IUu',NULL,'baaaa222@yahoo.com','0000-00-00','other','01212354',NULL,10,1473482211,1473482211,'wefaawefawefawefawe',3432,'erar','swag',0,NULL,NULL),(5,'abcdefg',0,0,'Tee','TA','BLybGtjxTYHlZ_qcaCuNrMm2pxcm-LKH','$2y$13$96ThALz8QZ./Cl3cpqO1SuPT9FlHxykMbkj4raafOKEbzlA3qhRnu',NULL,'ttt@yahoo.com','0000-00-00','other','55462421342434',NULL,10,1474350139,1474350139,'wefsdvf wfas sfg  gg cx',3435,'fase','dfe ef sfs',0,NULL,NULL),(6,'test111',0,0,'ttt','eee','GqzG9M69eDDGTyaMy2eT0R5eIk-qH6fc','$2y$13$x1dphFzAbeoPz6Ube1sw9e5pBEn07kN7cKY2FfcdKB4PWZw5CIsuu',NULL,'test101@yahoo.com','0000-00-00','other','342426525245',NULL,10,1474381914,1475314625,'awerfa3 4r fagfw3se faef3',4322,'rgdg','wef 3w4r ',0,NULL,NULL),(8,'test1',0,0,'BBB','CCC','vCRBGUgiao8rlUwGTxuGIhq35XTF3L0h','$2y$13$bE9zPel0ItDDb3gIsOyRt.Skr8EYd1Opluam4N2ntSsdgOdTpGPf.',NULL,'1111eed@gmail.com','2004-12-01','female','23434515','',10,1474405694,1474405694,'awefr3 4t3rfar4r3arfa3wr2',3424,'rege','awefae rfeaw',1,'',''),(9,'test2',0,0,'CCC','BBB','lyu6_5_1__HbO6DyXhByoCzgmcrbwWZ2','$2y$13$N1VLayfEsEXn0W6Tta8JmuNNAC1NrNW2Srs4KvBc633OjvHWkiJjW',NULL,'vvv@kamen.com','1908-11-26','female','3453452342',NULL,10,1474409916,1474409916,'3rfserfse rfref s',3424,'awef','wefawef aw',1,NULL,NULL),(10,'test3',0,0,'xxxxx','yyyyy','Wp4oDagETwPOA0ntchu2ZiyWH8-EN6iA','$2y$13$E6SJnbVKxSiC7Ynj3HKBMu.yKaZMQq3RmhLHlpp.kVq/KCIg95/8O',NULL,'tete@gmail.com','1994-07-05','female','342342523',NULL,10,1474410153,1474410153,'awefweafawe fa efsefdzv',3224,'wef ','zzefew fw',1,NULL,NULL),(11,'qqqq',0,0,'zzz','xxx','3btW4kvjtEtSwH6h050aU0THIPOfgWzg','$2y$13$/hBoOixGJ9NDvNH4Evek9uU3/BnRyBuiLoCPEbJ5LkT0/qfFYLEPa',NULL,'wfwe@ggg.com','2016-09-14','other','2423452454253',NULL,10,1474410335,1474410335,'awefwae fweafsfsefsfgefaf a',2321,'zsdf','awfda efawf',1,NULL,NULL),(12,'testa',0,0,'qwedfwef','awdaw da','KV8-hrTcBZPfZ2wXNgHzTE23y2mw9JeL','$2y$13$DCnuXFokISa76MfvSmmAh.nTETbSQtJBNTYLX1JsOZyFpy3SCkc3q',NULL,'efw@ggg.om','2016-09-14','male','2342535234141',NULL,10,1474410472,1474410472,'awef awefaw',3321,'awef','awef wefa fewaf aw',1,'awefawe fweaf vfsdbdfgbdrtbdxtgb hstgs4e5rg3a 4 tf4aw3','ef 3a4f g4egfvrseg re grg\r\nr grg\r\n s\r\ng s\r\n'),(13,'test1234',0,1,'Royce','Fan','5djDFFxqNIUVXSfDV8Qn3IJ2ZC7HuYZi','$2y$13$sw0jtqxcVQ2e8ukaE1KcKu.9mjbPoYpWh8Q5WJMSXe8BwtfuXJh/G',NULL,'fch@ayaya.com','1994-10-25','male','234342',NULL,10,1474628352,1474628352,'afwfwwef eaf few',2321,'wef','awefea ewfae ffew',1,'fa wefea fewaf e f','efaew feaw fewa fewaefwf'),(14,'Last',0,1,'Jenny','Sabaski','NXrwzIPlDf0LOgMhc3GDEwW9OIwp1PrN','$2y$13$zG0NhCaY7N7SHa1BLWLPzer0k/sdhqT5sA6zMsZ.ytY4ApB6MSybG',NULL,'jenny.love@gmail.com','1993-12-01','female','61424777948','',10,1475149874,1475149874,'11, Jalan Ampang',4000,'QLD','Ampang',0,'','');
+INSERT INTO `user` VALUES (1,'admin123',0,1,'Admin','Istrator','LnOv87CVH320bAemt3zrwXL6kPkEMaYk','$2y$13$wH9ETEBeMGim6Wf3rqzD5usLSmGkqkqcnMsPCumIgOZ5GyIPezbs2','E-vfYgGpW22MWoFEkf-cMAtnJVgmIopN_1476931742','fchunhuei@gmail.com','1995-07-12','female','61477888999',NULL,10,1473412170,1476931742,'103, Wickham Terrace',9999,'QLD','Brisbane',1,'test2\r\neafsf \r\nfaef\r\n f\r\nawefew\r\nf a\r\nf es\r\n f\r\nfew\r\naf','test'),(3,'test123',0,0,'aeffaf','Faffef','X2zXMs4OFJmIbNOP_SvmI1CTJIvZl2JD','$2y$13$KcFOQOVPn3bbFr38qa8.8ONN77KblfQVXHpCC.MJBzOEVixj2yv6G',NULL,'wsfewf@gmmm.com','2016-09-01','male','525256255522',NULL,10,1473441763,1473441763,'efgsdfgsvserfseg res grsgsdfg sdfg sfdg ',5454,'sfes','sdf gvsdg sreg',0,NULL,NULL),(4,'benNERD',0,0,'bebebebe','lalalala','3UdeCb0atfDZ3IjgjfrBdaCing9Ot9wI','$2y$13$qAwvY3Mjns.7t0bHDIf4PORsz.FnZAGpv7Do/mfSfedsRJ4hU6IUu',NULL,'baaaa222@yahoo.com','0000-00-00','other','01212354',NULL,10,1473482211,1473482211,'wefaawefawefawefawe',3432,'erar','swag',0,NULL,NULL),(5,'abcdefg',0,0,'Tee','TA','BLybGtjxTYHlZ_qcaCuNrMm2pxcm-LKH','$2y$13$96ThALz8QZ./Cl3cpqO1SuPT9FlHxykMbkj4raafOKEbzlA3qhRnu',NULL,'ttt@yahoo.com','0000-00-00','other','55462421342434',NULL,10,1474350139,1474350139,'wefsdvf wfas sfg  gg cx',3435,'fase','dfe ef sfs',0,NULL,NULL),(6,'test111',0,0,'ttt','eee','GqzG9M69eDDGTyaMy2eT0R5eIk-qH6fc','$2y$13$x1dphFzAbeoPz6Ube1sw9e5pBEn07kN7cKY2FfcdKB4PWZw5CIsuu',NULL,'test101@yahoo.com','0000-00-00','other','342426525245',NULL,10,1474381914,1475314625,'awerfa3 4r fagfw3se faef3',4322,'rgdg','wef 3w4r ',0,NULL,NULL),(8,'test1',0,0,'BBB','CCC','vCRBGUgiao8rlUwGTxuGIhq35XTF3L0h','$2y$13$bE9zPel0ItDDb3gIsOyRt.Skr8EYd1Opluam4N2ntSsdgOdTpGPf.',NULL,'1111eed@gmail.com','2004-12-01','female','23434515','',10,1474405694,1474405694,'awefr3 4t3rfar4r3arfa3wr2',3424,'rege','awefae rfeaw',1,'',''),(9,'test2',0,0,'CCC','BBB','lyu6_5_1__HbO6DyXhByoCzgmcrbwWZ2','$2y$13$N1VLayfEsEXn0W6Tta8JmuNNAC1NrNW2Srs4KvBc633OjvHWkiJjW',NULL,'vvv@kamen.com','1908-11-26','female','3453452342',NULL,10,1474409916,1474409916,'3rfserfse rfref s',3424,'awef','wefawef aw',1,NULL,NULL),(10,'test3',0,0,'xxxxx','yyyyy','Wp4oDagETwPOA0ntchu2ZiyWH8-EN6iA','$2y$13$E6SJnbVKxSiC7Ynj3HKBMu.yKaZMQq3RmhLHlpp.kVq/KCIg95/8O',NULL,'tete@gmail.com','1994-07-05','female','342342523',NULL,10,1474410153,1474410153,'awefweafawe fa efsefdzv',3224,'wef ','zzefew fw',1,NULL,NULL),(11,'qqqq',0,0,'zzz','xxx','3btW4kvjtEtSwH6h050aU0THIPOfgWzg','$2y$13$/hBoOixGJ9NDvNH4Evek9uU3/BnRyBuiLoCPEbJ5LkT0/qfFYLEPa',NULL,'wfwe@ggg.com','2016-09-14','other','2423452454253',NULL,10,1474410335,1474410335,'awefwae fweafsfsefsfgefaf a',2321,'zsdf','awfda efawf',1,NULL,NULL),(12,'testa',0,0,'qwedfwef','awdaw da','KV8-hrTcBZPfZ2wXNgHzTE23y2mw9JeL','$2y$13$DCnuXFokISa76MfvSmmAh.nTETbSQtJBNTYLX1JsOZyFpy3SCkc3q',NULL,'efw@ggg.om','2016-09-14','male','2342535234141',NULL,10,1474410472,1474410472,'awef awefaw',3321,'awef','awef wefa fewaf aw',1,'awefawe fweaf vfsdbdfgbdrtbdxtgb hstgs4e5rg3a 4 tf4aw3','ef 3a4f g4egfvrseg re grg\r\nr grg\r\n s\r\ng s\r\n'),(13,'test1234',0,1,'Royce','Fan','5djDFFxqNIUVXSfDV8Qn3IJ2ZC7HuYZi','$2y$13$sw0jtqxcVQ2e8ukaE1KcKu.9mjbPoYpWh8Q5WJMSXe8BwtfuXJh/G',NULL,'fch@ayaya.com','1994-10-25','male','234342',NULL,10,1474628352,1474628352,'afwfwwef eaf few',2321,'wef','awefea ewfae ffew',1,'fa wefea fewaf e f','efaew feaw fewa fewaefwf'),(14,'Last',0,1,'Jenny','Sabaski','NXrwzIPlDf0LOgMhc3GDEwW9OIwp1PrN','$2y$13$zG0NhCaY7N7SHa1BLWLPzer0k/sdhqT5sA6zMsZ.ytY4ApB6MSybG',NULL,'jenny.love@gmail.com','1993-12-01','female','61424777948','',10,1475149874,1475149874,'11, Jalan Ampang',4000,'QLD','Ampang',0,'','');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,8 +228,40 @@ CREATE TABLE `volunteer` (
 
 LOCK TABLES `volunteer` WRITE;
 /*!40000 ALTER TABLE `volunteer` DISABLE KEYS */;
-INSERT INTO `volunteer` VALUES (6,30);
+INSERT INTO `volunteer` VALUES (6,30),(1,38);
 /*!40000 ALTER TABLE `volunteer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `workschedule`
+--
+
+DROP TABLE IF EXISTS `workschedule`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `workschedule` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `courseID` int(11) NOT NULL,
+  `studentID` int(11) NOT NULL,
+  `start` datetime NOT NULL,
+  `end` datetime NOT NULL,
+  `note` text COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`id`),
+  KEY `courseID` (`courseID`),
+  KEY `studentID` (`studentID`),
+  CONSTRAINT `workschedule_ibfk_1` FOREIGN KEY (`courseID`) REFERENCES `course` (`courseID`),
+  CONSTRAINT `workschedule_ibfk_2` FOREIGN KEY (`studentID`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `workschedule`
+--
+
+LOCK TABLES `workschedule` WRITE;
+/*!40000 ALTER TABLE `workschedule` DISABLE KEYS */;
+INSERT INTO `workschedule` VALUES (1,36,6,'2016-10-30 10:30:00','2016-12-17 10:30:00','uihguiho'),(2,36,6,'2016-10-30 10:30:00','2016-10-30 10:30:00','aaaaaaa'),(3,36,6,'2016-10-30 10:30:00','2016-12-17 10:30:00','uihguiho'),(4,36,6,'2016-10-30 10:30:00','2016-10-30 10:30:00','aaaaaaa'),(5,36,6,'2016-10-30 10:30:00','2016-12-17 10:30:00','uihguiho'),(6,36,6,'2016-10-30 10:30:00','2016-10-30 10:30:00','aaaaaaa');
+/*!40000 ALTER TABLE `workschedule` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -240,4 +273,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-18 21:17:26
+-- Dump completed on 2016-10-20 15:48:47

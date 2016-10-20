@@ -1,12 +1,15 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 use yii\widgets\LinkPager;
 use kartik\grid\GridView;
 use common\models\Course;
 use yii\db\Query;
 use common\models\User;
+use kartik\dialog\Dialog;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider; */
@@ -24,6 +27,7 @@ $this->params['fluid'] = true;
 
         <h1><?= Html::encode($this->title) ?></h1>
 
+        <?= Dialog::widget() ?>
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'showPageSummary' => false,
@@ -129,36 +133,43 @@ $this->params['fluid'] = true;
                                     ->andWhere('DATE(end) <= CURDATE()')->one();
                                 if (!empty($isOldStudent)) {
                                     $result = common\models\Student::find()->where(['courseID' => $model->courseID, 'studentID' => Yii::$app->user->identity->id])->one();
-                                    return empty($result) ? (
-                                        Html::a(
+                                    if (empty($result)) {
+                                        return Html::a(
                                             'Enroll Now', ['/site/enroll', 'id' => $model->courseID, 'startDate' => $model->start, 'endDate' => $model->end],
                                             [
                                                 'class' => 'list-group-item list-group-item-success',
                                                 'title' => 'Enroll the course now!'
                                             ]
-                                        )
-                                    ) : (
-                                        $result['pending'] ? (
-                                            '<a href="#" title="Unfortunately the class is already full. However, You have been added into waitlist. If there is any extra space, we will notice you. Thank you." class="list-group-item list-group-item-warning">Pending</a>'
-                                        ) : (
-                                            '<a href="#" title="You have already enrolled this course." class="list-group-item disabled">Enrolled</a>'
-                                        )
-                                    );
+                                        );
+                                    } else {
+                                        $this->registerJs('var url = "'.Url::to(['site/cancel-course', 'courseID' => $model['courseID'], 'studentID' => Yii::$app->user->identity->id]).'";', View::POS_READY);
+                                        if ($result['pending']) {
+                                            return '<button type="button" id="btn-confirm" title="Cancel the Enrollment" class="btn btn-warning">Pending</button>';
+                                            //return '<a href="#" title="Unfortunately the class is already full. However, You have been added into waitlist. If there is any extra space, we will notice you. Thank you." class="list-group-item list-group-item-warning">Pending</a>';
+                                        } else {
+                                            return '<button type="button" id="btn-confirm" title="Cancel the Enrollment" class="btn btn-warning">Enrolled</button>';
+                                            //return '<a href="#" title="You have already enrolled this course." class="list-group-item disabled">Enrolled</a>';
+                                        }
+                                    }
                                 } else {
                                     $result = common\models\Student::find()->where(['courseID' => $model->courseID, 'studentID' => Yii::$app->user->identity->id])->one();
-                                    return $model['duration']==10 ? (
-                                            $result['pending'] ? (
-                                                    '<a href="#" title="Unfortunately the class is already full. However, You have been added into waitlist. If there is any extra space, we will notice you. Thank you." class="list-group-item list-group-item-warning">Pending</a>'
-                                                ) : (
-                                                Html::a(
-                                                    'Enroll Now',
-                                                    ['/site/enroll', 'id' => $model->courseID, 'startDate' => $model->start, 'endDate' => $model->end],
-                                                    [
-                                                        'class' => 'list-group-item list-group-item-success',
-                                                        'title' => 'Enroll the course now!'
-                                                    ])
-                                                )
-                                    ) : ('<a href="#" title="You have to enroll and complete your first 10-day course before able to enroll 3 & 30 days course." class="list-group-item disabled">Enroll Now</a>');
+                                    if ($model['duration'] == 10) {
+                                        if ($result['pending']) {
+                                            $this->registerJs('var url = "'.Url::to(['site/cancel-course', 'courseID' => $model['courseID'], 'studentID' => Yii::$app->user->identity->id]).'";', View::POS_READY);
+                                            return '<button type="button" id="btn-confirm" title="Cancel the Enrollment" class="btn btn-warning">Pending</button>';
+                                            //return '<a href="#" title="Unfortunately the class is already full. However, You have been added into waitlist. If there is any extra space, we will notice you. Thank you." class="list-group-item list-group-item-warning">Pending</a>';
+                                        } else {
+                                            return Html::a(
+                                                'Enroll Now',
+                                                ['/site/enroll', 'id' => $model->courseID, 'startDate' => $model->start, 'endDate' => $model->end],
+                                                [
+                                                    'class' => 'list-group-item list-group-item-success',
+                                                    'title' => 'Enroll the course now!'
+                                                ]);
+                                        }
+                                    } else {
+                                        return '<a href="#" title="You have to enroll and complete your first 10-day course before able to enroll 3 & 30 days course." class="list-group-item disabled">Enroll Now</a>';
+                                    }
                                 }
                             }
                         }
@@ -170,3 +181,17 @@ $this->params['fluid'] = true;
 </div>
 
 </div><!-- course -->
+
+<?php
+
+$js = <<< JS
+$("#btn-confirm").on("click", function() {
+    krajeeDialog.confirm("Are you sure you want to proceed?", function (result) {
+        if (result) {
+            window.location.href = url;
+        }
+    });
+});
+JS;
+$this->registerJs($js);
+

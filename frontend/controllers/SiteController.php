@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use Yii;
+use yii\base\Exception;
 use yii\db\Query;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -383,4 +384,16 @@ class SiteController extends Controller
         return $this->actionRoster();
     }
 
+    public function actionCancelCourse($studentID, $courseID) {
+        try {
+            $query = Yii::$app->db->createCommand()
+                ->delete('classtable', 'studentID=' . $studentID . ' AND courseID=' . $courseID)
+                ->execute();
+            Yii::$app->session->setFlash('info', 'You have cancelled the course (courseID: '.$courseID.').');
+        } catch (Exception $e) {
+            Yii::$app->session->setFlash('danger', 'Failed to cancel the enrollment. Please contact the administrator.');
+        }
+
+        return $this->actionCourse();
+    }
 }

@@ -7,6 +7,7 @@ use kartik\date\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model common\models\Course */
 /* @var $form ActiveForm */
+
 ?>
 <div class="course">
 

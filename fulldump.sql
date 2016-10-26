@@ -40,7 +40,6 @@ CREATE TABLE `attandance` (
 
 LOCK TABLES `attandance` WRITE;
 /*!40000 ALTER TABLE `attandance` DISABLE KEYS */;
-INSERT INTO `attandance` VALUES (4,30,0,'2016-10-26','course_30/DZAsAmz_aeWfzT6gKL5tIrafLOY2S03w.pdf');
 /*!40000 ALTER TABLE `attandance` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,7 +67,7 @@ CREATE TABLE `classtable` (
 
 LOCK TABLES `classtable` WRITE;
 /*!40000 ALTER TABLE `classtable` DISABLE KEYS */;
-INSERT INTO `classtable` VALUES (30,13,1),(31,1,1),(30,1,1),(35,1,0),(39,3,0),(39,4,0),(39,5,0);
+INSERT INTO `classtable` VALUES (31,1,1),(35,1,0),(39,3,0),(39,4,0),(39,5,0);
 /*!40000 ALTER TABLE `classtable` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -96,7 +95,7 @@ CREATE TABLE `course` (
 
 LOCK TABLES `course` WRITE;
 /*!40000 ALTER TABLE `course` DISABLE KEYS */;
-INSERT INTO `course` VALUES (30,'2016-10-06',10,'2016-10-15',20,10),(31,'2016-09-30',3,'2016-10-02',15,10),(32,'2016-09-15',30,'2016-10-14',40,10),(34,'2016-10-08',10,'2016-10-17',20,10),(35,'2016-10-18',10,'2016-10-27',15,10),(36,'2016-11-28',3,'2016-11-30',20,10),(38,'2016-10-21',3,'2016-10-23',19,10),(39,'2016-10-31',3,'2016-11-02',3,0),(40,'2016-10-19',3,'2016-10-21',20,10);
+INSERT INTO `course` VALUES (31,'2016-09-30',3,'2016-10-02',15,10),(34,'2016-10-08',10,'2016-10-17',20,10),(35,'2016-10-18',10,'2016-10-27',15,10),(36,'2016-11-28',3,'2016-11-30',20,10),(38,'2016-10-21',3,'2016-10-23',19,10),(39,'2016-10-31',3,'2016-11-02',3,0),(40,'2016-10-19',3,'2016-10-21',20,10);
 /*!40000 ALTER TABLE `course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -257,7 +256,7 @@ CREATE TABLE `volunteer` (
 
 LOCK TABLES `volunteer` WRITE;
 /*!40000 ALTER TABLE `volunteer` DISABLE KEYS */;
-INSERT INTO `volunteer` VALUES (6,30),(1,38);
+INSERT INTO `volunteer` VALUES (1,38),(6,39),(6,40);
 /*!40000 ALTER TABLE `volunteer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -280,7 +279,7 @@ CREATE TABLE `workschedule` (
   KEY `studentID` (`studentID`),
   CONSTRAINT `workschedule_ibfk_1` FOREIGN KEY (`courseID`) REFERENCES `course` (`courseID`),
   CONSTRAINT `workschedule_ibfk_2` FOREIGN KEY (`studentID`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -289,7 +288,7 @@ CREATE TABLE `workschedule` (
 
 LOCK TABLES `workschedule` WRITE;
 /*!40000 ALTER TABLE `workschedule` DISABLE KEYS */;
-INSERT INTO `workschedule` VALUES (1,36,6,'2013-12-22 14:45:00','2016-11-30 14:50:00','uihguiho'),(2,36,6,'2016-10-30 10:30:00','2016-10-30 10:30:00','aaaaaaa'),(3,36,6,'2016-10-30 10:30:00','2016-12-17 10:30:00','uihguiho'),(4,36,6,'2016-10-30 10:30:00','2016-10-30 10:30:00','aaaaaaa'),(5,36,6,'2016-10-30 10:30:00','2016-12-17 10:30:00','uihguiho'),(6,36,6,'2016-10-30 10:30:00','2016-10-30 10:30:00','aaaaaaa'),(7,39,3,'2016-10-19 05:25:00','2016-10-19 05:00:00','');
+INSERT INTO `workschedule` VALUES (3,36,6,'2016-10-30 10:30:00','2016-11-02 10:30:00','uihguiho'),(7,35,3,'2016-10-19 05:25:00','2016-10-19 05:00:00',''),(8,39,6,'2016-10-20 19:30:00','2016-10-21 11:00:00','');
 /*!40000 ALTER TABLE `workschedule` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -302,4 +301,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-27  6:17:12
+-- Dump completed on 2016-10-27  7:34:11

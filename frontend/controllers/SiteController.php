@@ -334,7 +334,7 @@ class SiteController extends Controller
     {
         $query = (new Query)->select(['w.courseID', 'c.start', 'c.end', 'c.duration'])
             ->from('course c')
-            ->innerJoin(WorkSchedule::tableName().' w', 'w.courseID=c.courseID')
+            ->innerJoin('volunteer w', 'w.courseID=c.courseID')
             ->andWhere(['w.studentID' => Yii::$app->user->id]);
 
         $debug = [];

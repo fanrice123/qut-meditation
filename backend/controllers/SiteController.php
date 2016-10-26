@@ -106,7 +106,7 @@ class SiteController extends Controller
         foreach ($schedules as $index => $schedule) {
             $courseID = $schedule->courseID;
             $this->schedules[$courseID][$index] = new Event();
-            $this->schedules[$courseID][$index]->id = $schedule->id;
+            //$this->schedules[$courseID][$index]->id = $schedule->id;
             $this->schedules[$courseID][$index]->start = $schedule->start;
             $this->schedules[$courseID][$index]->end = $schedule->end;
             $this->schedules[$courseID][$index]->title = 's.'.$schedule->studentID. ', '. $courseID;

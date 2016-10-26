@@ -332,25 +332,28 @@ class SiteController extends Controller
 
     public function actionViewRoster()
     {
-        $query = WorkSchedule::find()->where(['studentID' => Yii::$app->user->id]);
+        $query = (new Query)->select(['w.courseID', 'c.start', 'c.end', 'c.duration'])
+            ->from('course c')
+            ->innerJoin(WorkSchedule::tableName().' w', 'w.courseID=c.courseID')
+            ->andWhere(['w.studentID' => Yii::$app->user->id]);
 
-
-        $courses = $query->innerJoinWith('course c', 'c.courseID='.WorkSchedule::tableName().'courseID')->all();
+        $debug = [];
+        $courses = $query->all();
         foreach ($courses as $index => $course) {
             $event = new Event();
-            $event->start = $course->start;
-            $end = \DateTime::createFromFormat('Y-m-d', $course->end);
+            $event->start = $course['start'];
+            $end = \DateTime::createFromFormat('Y-m-d', $course['end']);
             $end->modify('+1 day');
             $event->end = $end->format('Y-m-d');
-            $event->title = 'CID: '.$course->courseID. ',d: '.$course->duration;
+            $event->title = 'CourseID: '.$course['courseID']. ',duration: '.$course['duration'].' days';
+            $debug[] = $event->title;
             $event->color = '#A0A0A0';
             $events[] = $event;
 
         }
 
         $schedules = [[]];
-        $jobs = $query->all();
-        $events = [];
+        $jobs = WorkSchedule::find()->where(['studentID' => Yii::$app->user->id])->all();
         foreach ($jobs as $index => $schedule) {
             $courseID = $schedule->courseID;
             $schedules[$courseID][$index] = new Event();

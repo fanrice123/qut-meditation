@@ -79,7 +79,7 @@ class WorkScheduleController extends Controller
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
             $courseID = end($_POST['depdrop_parents']);
-            $list = (new Query())->select(['c.studentID', 'u.firstName', 'u.lastName'])->from('classtable c')->where(['c.courseID' => $courseID])->innerJoin('user u', 'u.id=c.studentID')->all();
+            $list = (new Query())->select(['c.studentID', 'u.firstName', 'u.lastName'])->from('volunteer c')->where(['c.courseID' => $courseID])->innerJoin('user u', 'u.id=c.studentID')->all();
             $selected = null;
             if ($courseID != null) {
                 $selected = '';

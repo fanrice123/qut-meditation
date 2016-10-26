@@ -38,6 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Alert::widget() ?>
             <div class="col-lg-10" id="body">
                 <h1><?= Html::encode($this->title) ?></h1>
+
                 <?= yii2fullcalendar::widget([
                     'events' => $events,
                 ]) ?>

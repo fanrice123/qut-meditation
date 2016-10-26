@@ -96,7 +96,7 @@ class SiteController extends Controller
             $end = \DateTime::createFromFormat('Y-m-d', $course->end);
             $end->modify('+1 day');
             $event->end = $end->format('Y-m-d');
-            $event->title = 'CID: '.$course->courseID. ',d: '.$course->duration;
+            $event->title = 'CourseID: '.$course['courseID']. ',duration: '.$course['duration'].' days';
             $event->color = '#A0A0A0';
             $events[] = $event;
 

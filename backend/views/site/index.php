@@ -4,13 +4,14 @@
 use yii\db\Query;
 use yii2fullcalendar\yii2fullcalendar;
 
-$this->title = 'My Yii Application';
+$this->title = 'Schedule';
 
 /* @var $events \yii2fullcalendar\models\Event */
 ?>
 
 <div class="site-index">
 
+    <h2><?= $this->title ?></h2>
     <?= yii2fullcalendar::widget([
         'events' => $events,
     ]) ?>

@@ -213,10 +213,4 @@ class AttendanceController extends Controller
         return  Json::encode(['output' => $out, 'selected'=>$selected]);
         */
     }
-
-    /*public function actionLoadDays()
-    {
-
-        return $_POST;
-    }*/
 }

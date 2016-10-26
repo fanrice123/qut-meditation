@@ -332,10 +332,24 @@ class SiteController extends Controller
 
     public function actionViewRoster()
     {
-        $schedules = WorkSchedule::find()->where(['studentID' => Yii::$app->user->id])->all();
+        $query = WorkSchedule::find()->where(['studentID' => Yii::$app->user->id]);
+
+
+        $courses = $query->innerJoinWith('course c', 'c.courseID='.WorkSchedule::tableName().'courseID')->all();
+        foreach ($courses as $index => $course) {
+            $event = new Event();
+            $event->start = $course->start;
+            $end = \DateTime::createFromFormat('Y-m-d', $course->end);
+            $end->modify('+1 day');
+            $event->end = $end->format('Y-m-d');
+            $event->title = 'CID: '.$course->courseID. ',d: '.$course->duration;
+            $event->color = '#A0A0A0';
+            $events[] = $event;
+
+        }
 
         $schedules = [[]];
-        $jobs = WorkSchedule::find()->all();
+        $jobs = $query->all();
         $events = [];
         foreach ($jobs as $index => $schedule) {
             $courseID = $schedule->courseID;
@@ -381,7 +395,7 @@ class SiteController extends Controller
                 Yii::$app->session->setFlash('danger', 'Sorry, you have already volunteered a class which will start on ' . $volunteerTable['start'] . ' that conflicts with the class you are intending to volunteered.');
             }
         }
-        return $this->actionRoster();
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     public function actionCancelCourse($studentID, $courseID) {

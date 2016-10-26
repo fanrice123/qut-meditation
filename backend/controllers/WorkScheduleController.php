@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\VolunteerIDForm;
+use common\models\Volunteer;
 use Yii;
 use common\models\WorkSchedule;
 use common\models\WorkScheduleSearch;
@@ -14,6 +15,7 @@ use yii\base\Model;
 use backend\models\CourseIDForm;
 use yii\helpers\ArrayHelper;
 use yii\db\Query;
+use yii\helpers\Json;
 
 /**
  * WorkScheduleController implements the CRUD actions for WorkSchedule model.
@@ -72,6 +74,29 @@ class WorkScheduleController extends Controller
      */
     private $volunteer;
 
+    public function actionLoadVolunteers()
+    {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $courseID = end($_POST['depdrop_parents']);
+            $list = (new Query())->select(['c.studentID', 'u.firstName', 'u.lastName'])->from('classtable c')->where(['c.courseID' => $courseID])->innerJoin('user u', 'u.id=c.studentID')->all();
+            $selected = null;
+            if ($courseID != null) {
+                $selected = '';
+                foreach ($list as $index => $student) {
+                    $out[] = ['id' => $student['studentID'], 'name' => $student['firstName'] . ' ' . $student['lastName']];
+                    if ($index == 0) {
+                        $selected = $student['studentID'];
+                    }
+                }
+                // Shows how you can preselect a value
+                echo Json::encode(['output' => $out, 'selected' => $selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected' => '']);
+    }
+
     /**
      * Creates a new WorkSchedule model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -83,6 +108,7 @@ class WorkScheduleController extends Controller
         $this->schedules = [new WorkSchedule];
         $this->volunteer = new VolunteerIDForm;
         $modelCourseID = new CourseIDForm();
+        $courseIDs = [new CourseIDForm()];
         $log = $_POST;
 
         if ($modelCourseID->load(Yii::$app->request->post())) {
@@ -149,6 +175,7 @@ class WorkScheduleController extends Controller
             'courseID' => $courseID,
             'volunteersAvailable' => $volunteersAvailable,
             'log' => $log,
+            'courseIDs' => $courseIDs,
         ]);
 
     }

@@ -25,6 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'volunteer' => $volunteer,
         'isUpdate' => false,
         'volunteersAvailable' => $volunteersAvailable,
+        'courseIDs' => $courseIDs,
     ]) ?>
 
 </div>

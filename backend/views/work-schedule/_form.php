@@ -4,7 +4,11 @@ use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use wbraganca\dynamicform\DynamicFormWidget;
 use kartik\widgets\Select2;
+use backend\models\CourseIDForm;
 use yii\widgets\Pjax;
+use kartik\depdrop\DepDrop;
+use yii\helpers\Url;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $modelsSchedule common\models\WorkSchedule[] */
@@ -15,12 +19,18 @@ use yii\widgets\Pjax;
 /* @var $volunteers backend\models\VolunteerIDForm[] */
 /* @var $volunteersAvailable array */
 
+
+$this->registerJs("
+if (jQuery('#volunteeridform-1-studentid').data('depdrop')) { jQuery('#volunteeridform-1-studentid').depdrop('destroy'); }
+jQuery('#volunteeridform-1-studentid').depdrop(depdrop_c232c066);");
 ?>
 
 <div class="work-schedule-form">
 
     <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
 
+    <br>
+    <br>
     <div class="row">
         <div class="col-sm-6">
             <?php if ($isUpdate): ?>
@@ -40,6 +50,8 @@ use yii\widgets\Pjax;
         <div class="line line-dashed"></div>
     </div>
 
+    <br>
+    <br>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -56,21 +68,28 @@ use yii\widgets\Pjax;
                         echo Html::activeHiddenInput($volunteer, "[{$indexVolunteer}]id");
                     }*/
                     ?>
-                    <?= $form->field($volunteer, "studentID")->label(false)->dropDownList(
-                        $volunteersAvailable,
+
+                    <?php echo $form->field($volunteer, "studentID")->label(false)->widget(DepDrop::className(), [
+                        'type' => DepDrop::TYPE_DEFAULT,
+                        'pluginOptions'=>[
+                            'depends'=>['courseidform-courseid'],
+                            'url' => Url::to(['/work-schedule/load-volunteers']),
+                            'loadingText' => 'Loading Volunteers ...',
+                        ],
+                    ]) ?>
+                    <?php /*echo $form->field($volunteer, "[{$indexCourseID}]studentID")->label(false)->widget(Select2::className(),
+
                         [
-                            'width' => '250px',
+                            'data' => $volunteersAvailable,
+
                         ]
-                    ) ?>
+                    )*/ ?>
                 </td>
                 <td>
                     <?= $this->render('_form-schedules', [
                         'form' => $form,
                         'modelsSchedule' => $modelsSchedule,
                     ]) ?>
-                    <div class="padding-v-md">
-                        <div class="line line-dashed"></div>
-                    </div>
                 </td>
             </tr>
         </tbody>

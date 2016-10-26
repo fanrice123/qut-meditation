@@ -21,6 +21,7 @@ class CreateCourseForm extends Model
     public $duration;
     public $student_max;
     public $waitList;
+    public $end;
 
     public function __construct(array $config = [])
     {

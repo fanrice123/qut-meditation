@@ -41,7 +41,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'course', 'report', 'write-email', 'attendance', 'load-days'],
+                        'actions' => ['logout', 'index', 'course', 'report', 'write-email', 'attendance', 'load-days', 'lists'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -77,6 +77,7 @@ class SiteController extends Controller
      * @var Event[[]]
      */
     private $schedules;
+
     /**
      * Displays homepage.
      *
@@ -86,6 +87,19 @@ class SiteController extends Controller
     {
         $this->schedules = [[]];
         $events = [];
+
+        $courses = Course::find()->all();
+        foreach ($courses as $index => $course) {
+            $event = new Event();
+            $event->start = $course->start;
+            $end = \DateTime::createFromFormat('Y-m-d', $course->end);
+            $end->modify('+1 day');
+            $event->end = $end->format('Y-m-d');
+            $event->title = 'CID: '.$course->courseID. ',d: '.$course->duration;
+            $event->color = '#A0A0A0';
+            $events[] = $event;
+
+        }
 
         $schedules = WorkSchedule::find()->all();
         foreach ($schedules as $index => $schedule) {
@@ -103,15 +117,6 @@ class SiteController extends Controller
                 $schedule->color = $colour;
                 $events[] = $schedule;
             }
-        }
-
-        $courses = Course::find()->all();
-        foreach ($courses as $index => $course) {
-            $event = new Event();
-            $event->start = $course->start;
-            $event->end = $course->end;
-            $event->title = 'CID: '.$course->courseID. ',d: '.$course->duration;
-            $events[] = $event;
         }
 
         return $this->render('index', [

@@ -21,6 +21,7 @@ use yii\helpers\Url;
     ]) ?>
     <?= $form->field($model, 'day')->widget(DepDrop::className(), [
         'type' => DepDrop::TYPE_SELECT2,
+        'options' => ['placeholder' => 'Select ...'],
         'pluginOptions'=>[
             'depends'=>['attendanceform-courseid'],
             'url' => Url::to(['/attendance/load-days']),

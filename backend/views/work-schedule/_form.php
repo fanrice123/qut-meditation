@@ -56,12 +56,10 @@ use yii\widgets\Pjax;
                         echo Html::activeHiddenInput($volunteer, "[{$indexVolunteer}]id");
                     }*/
                     ?>
-                    <?= $form->field($volunteer, "studentID")->label(false)->widget(Select2::className(),
+                    <?= $form->field($volunteer, "studentID")->label(false)->dropDownList(
+                        $volunteersAvailable,
                         [
-                            'data' => $volunteersAvailable,
-                            'pluginOptions' => [
-                                'width' => '250px',
-                            ]
+                            'width' => '250px',
                         ]
                     ) ?>
                 </td>

@@ -85,8 +85,9 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $this->schedules = [[]];
-        $schedules = WorkSchedule::find()->all();
         $events = [];
+
+        $schedules = WorkSchedule::find()->all();
         foreach ($schedules as $index => $schedule) {
             $courseID = $schedule->courseID;
             $this->schedules[$courseID][$index] = new Event();
@@ -102,6 +103,15 @@ class SiteController extends Controller
                 $schedule->color = $colour;
                 $events[] = $schedule;
             }
+        }
+
+        $courses = Course::find()->all();
+        foreach ($courses as $index => $course) {
+            $event = new Event();
+            $event->start = $course->start;
+            $event->end = $course->end;
+            $event->title = 'CID: '.$course->courseID. ',d: '.$course->duration;
+            $events[] = $event;
         }
 
         return $this->render('index', [

@@ -19,11 +19,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'courseID') ?>
 
-    <?= $form->field($model, 'day') ?>
-
     <?= $form->field($model, 'date') ?>
-
-    <?= $form->field($model, 'file') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

@@ -5,13 +5,70 @@ use yii\bootstrap\ActiveForm;
 use kartik\date\DatePicker;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Course */
 /* @var $form ActiveForm */
+/* @var $dataProvider \yii\data\ActiveDataProvider */
 
 ?>
 <div class="course">
+
+    <h2>Courses</h2>
+    <br>
+    <br>
+
+    <div class="row" >
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'showPageSummary' => false,
+        'striped' => true,
+        'hover' => true,
+        'export' => false,
+        'panel'=>[
+            'heading'=>'<i class="glyphicon glyphicon-calendar"></i> Courses Available',
+            'type'=>'primary'
+        ],
+        'columns' => [
+            ['class' => 'kartik\grid\SerialColumn'],
+            [
+                'attribute' => 'courseID',
+                'vAlign' => 'middle',
+                'hAlign' => 'center',
+                'width' => '120px',
+            ],
+            [
+                'attribute' => 'course_start',
+                'width' => '250px',
+                'hAlign' => 'right',
+                'vAlign' => 'middle',
+                'value' => function($model, $key, $index, $widget) {
+                    return $model->start;
+                }
+            ],
+            [
+                'attribute' => 'duration_(days)',
+                'width' => '120px',
+                'vAlign' => 'middle',
+                'hAlign' => 'center',
+                'value' => function ($model, $key, $index, $widget) {
+                    return $model->duration;
+                }
+            ],
+            [
+                'attribute' => 'course_end',
+                'width' => '250px',
+                'vAlign' => 'middle',
+                'hAlign' => 'right',
+                'value' => function($model, $key, $index, $widget) {
+                    return $model->end;
+                }
+            ],
+        ]
+    ]) ?>
+    </div>
+
 
     <?php $form = ActiveForm::begin([
         'id'=>'course-form',
@@ -45,5 +102,6 @@ use yii\helpers\Url;
                                                       'name' => 'create-button']) ?>
         </div>
     <?php ActiveForm::end(); ?>
+
 
 </div><!-- course -->

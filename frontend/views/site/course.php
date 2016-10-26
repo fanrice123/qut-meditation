@@ -75,7 +75,7 @@ $this->params['fluid'] = true;
                 ],
                 [
                     'class'=>'kartik\grid\ExpandRowColumn',
-                    'enableRowClick' => true,
+                    'enableRowClick' => false,
                     'expandTitle' => 'view volunteers',
                     'width'=>'100px',
                     'value'=>function ($model, $key, $index, $column) {
@@ -164,13 +164,13 @@ $this->params['fluid'] = true;
                                                 'Enroll Now',
                                                 ['/site/enroll', 'id' => $model->courseID, 'startDate' => $model->start, 'endDate' => $model->end],
                                                 [
-                                                    'class' => 'list-group-item list-group-item-success',
+                                                    'class' => 'btn btn-success',
                                                     'title' => 'Enroll the course now!',
                                                     'style' => 'width: 100%',
                                                 ]);
                                         }
                                     } else {
-                                        return '<a href="#" title="You have to enroll and complete your first 10-day course before able to enroll 3 & 30 days course." style="width: 100%" class="btn disabled">Enroll Now</a>';
+                                        return '<a href="#" title="You have to enroll and complete your first 10-day course before able to enroll 3 & 30 days course." style="width: 100%" class="list-group-item btn-danger disabled">Enroll Now</a>';
                                     }
                                 }
                             }

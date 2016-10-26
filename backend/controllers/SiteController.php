@@ -21,6 +21,7 @@ use yii\web\UploadedFile;
 use yii2fullcalendar\models\Event;
 use backend\models\AttendanceForm;
 use yii\helpers\Json;
+use yii\data\ActiveDataProvider;
 
 /**
  * Site controller
@@ -160,6 +161,12 @@ class SiteController extends Controller
 
     public function actionCourse()
     {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Course::find()->where('DATE(start) > CURDATE()')->orderBy('start'),
+            'sort' => false,
+            'pagination' => ['pageSize' => 10]
+        ]);
+
         $model = new CreateCourseForm();
 
         if ($model->load(Yii::$app->request->post())) {
@@ -176,6 +183,7 @@ class SiteController extends Controller
         }
         return $this->render('course', [
             'model' => $model,
+            'dataProvider' => $dataProvider
         ]);
     }
 

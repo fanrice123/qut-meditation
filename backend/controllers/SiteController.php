@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\Course;
+use common\models\Student;
 use common\models\WorkSchedule;
 use Yii;
 use yii\web\Controller;
@@ -18,6 +19,8 @@ use common\models\User;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 use yii2fullcalendar\models\Event;
+use backend\models\AttendanceForm;
+use yii\helpers\Json;
 
 /**
  * Site controller
@@ -38,7 +41,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'course', 'report', 'write-email'],
+                        'actions' => ['logout', 'index', 'course', 'report', 'write-email', 'attendance', 'load-days'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

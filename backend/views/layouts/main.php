@@ -25,6 +25,7 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
+<?php if (Yii::$app->controller->action->id != 'pdf'): ?>
 <div class="wrap">
     <?php
     NavBar::begin([
@@ -40,6 +41,7 @@ AppAsset::register($this);
         ['label' => 'Volunteer Schedule', 'url' => ['/work-schedule/index']],
         ['label' => 'Report', 'url' => ['/report/index']],
         ['label' => 'Email', 'url' => ['/site/write-email']],
+        ['label' => 'Attendance', 'url' => ['/attendance/index']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
@@ -53,6 +55,8 @@ AppAsset::register($this);
             . Html::endForm()
             . '</li>';
     }
+
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,
@@ -67,6 +71,7 @@ AppAsset::register($this);
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>
+
 </div>
 
 <footer class="footer">
@@ -76,6 +81,9 @@ AppAsset::register($this);
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>
+<?php else: ?>
+    <?= $content ?>
+<?php endif; ?>
 
 <?php $this->endBody() ?>
 </body>

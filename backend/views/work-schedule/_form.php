@@ -19,10 +19,6 @@ use yii\web\View;
 /* @var $volunteers backend\models\VolunteerIDForm[] */
 /* @var $volunteersAvailable array */
 
-
-$this->registerJs("
-if (jQuery('#volunteeridform-1-studentid').data('depdrop')) { jQuery('#volunteeridform-1-studentid').depdrop('destroy'); }
-jQuery('#volunteeridform-1-studentid').depdrop(depdrop_c232c066);");
 ?>
 
 <div class="work-schedule-form">

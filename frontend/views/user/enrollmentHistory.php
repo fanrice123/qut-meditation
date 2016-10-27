@@ -38,7 +38,7 @@ $this->params['fluid'] = true;
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
             <?= Alert::widget() ?>
-            
+
             <div class="col-lg-10" id="body" style="margin-bottom: 30px">
                     <h1>
                         <?= Html::encode($this->title) ?>

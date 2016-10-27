@@ -83,7 +83,7 @@ AppAsset::register($this);
     <?php if($this->context->id == 'user' ||
         ($this->context->action->id == 'view-roster' ||
          $this->context->action->id == 'roster')) : ?>
-        <div class="row">
+        <div class="row" style="margin-top: 100px">
             <?= $content ?>
         </div>
     <?php else : ?>

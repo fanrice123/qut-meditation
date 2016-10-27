@@ -34,7 +34,8 @@
         "kartik-v/yii2-field-range": "*",
         "kartik-v/yii2-dialog": "*",
         "kartik-v/yii2-widget-depdrop": "@dev",
-        "yii2assets/yii2-pdfjs": ">=1.0"
+        "yii2assets/yii2-pdfjs": ">=1.0",
+        "yiisoft/yii2-imagine": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

@@ -3,11 +3,64 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
+use yii\imagine\Image;
+use Imagine\Image\Box;
 
 $this->title = 'About Us ~ Omm Meditation Centre';
+
+//$image = Image::getImagine()->open('images/homepage.jpg');
+//$image->thumbnail(new Box(1200, 800))->save('images/homePage.jpg', ['quelity' => 90]);
 ?>
-<div class="site-index"  id="body">
-    <h1><?= Html::encode($this->title) ?></h1>
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <?= Html::img('images/homepage.jpg', ['alt' =>"Ohm"]) ?>
+            <div class="carousel-caption">
+                <h3>Meditation</h3>
+                <p>The atmosphere in our centre is lorem ipsum.</p>
+            </div>
+        </div>
+
+        <div class="item">
+            <?= Html::img('images/med2.jpg', ['alt' =>"Ohm"]) ?>
+            <div class="carousel-caption">
+                <h3>Community</h3>
+                <p>Thank you, a night we won't forget.</p>
+            </div>
+        </div>
+
+        <div class="item">
+            <?= Html::img('images/med1.jpg', ['alt' =>"Ohm"]) ?>
+            <div class="carousel-caption">
+                <h3>Life</h3>
+                <p>Even though the life was a mess, we had the best time.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+<div class="container text-center" id="body" style="padding: 80px 120px">
+    <h2><?= Html::encode($this->title) ?></h2>
+    <p><em>Peace.</em></p>
+    <p>We have created a place to let you RIP..</p>
 
     <p>
         Welcome to the Omm Meditation Centre website.
@@ -32,6 +85,12 @@ $this->title = 'About Us ~ Omm Meditation Centre';
         &nbsp;
         (Insert picture gallery of the centre here)
     </p>
+</div>
+<div class="site-index" >
+
+
+
+
 
 </div>
 

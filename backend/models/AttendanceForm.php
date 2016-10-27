@@ -91,6 +91,7 @@ class AttendanceForm extends Model
             $attendance->courseID = $this->courseID;
             $attendance->date = $this->date;
             $attendance->file = $newFilePath;
+            $attendance->day = $this->day;
 
             if ($flag)
                 return $attendance->save();

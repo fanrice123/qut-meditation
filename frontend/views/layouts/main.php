@@ -25,7 +25,7 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<div class="wrap">
+<div class="wrap" style="margin-top: 50px">
     <?php
     NavBar::begin([
         'brandLabel' => 'Om~ Meditation',
@@ -43,7 +43,7 @@ AppAsset::register($this);
     }
     $menuItems[] = ['label' => 'About',
          'items' => [['label' => 'Contact', 'url' => ['/site/contact']],
-                     ['label' => 'Donate Us', 'url' => ['/site/donation']]
+                     ['label' => 'Donate to Us', 'url' => ['/site/donation']]
                     ]
     ];
     if (Yii::$app->user->isGuest) {
@@ -83,18 +83,23 @@ AppAsset::register($this);
     <?php if($this->context->id == 'user' ||
         ($this->context->action->id == 'view-roster' ||
          $this->context->action->id == 'roster')) : ?>
-            <div class="row">
-
-            <?= $content ?>
-            </div>
-    <?php else : ?>
-        <div class="container">
-            <?= Breadcrumbs::widget([
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]) ?>
-            <?= Alert::widget() ?>
+        <div class="row">
             <?= $content ?>
         </div>
+    <?php else : ?>
+        <?php if($this->context->id == 'site' && $this->context->action->id == 'index') : ?>
+            <div class="container" style="padding-top: 0px">
+                <?= $content ?>
+            </div>
+        <?php else: ?>
+            <div class="container">
+                <?= Breadcrumbs::widget([
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ]) ?>
+                <?= Alert::widget() ?>
+                <?= $content ?>
+            </div>
+        <?php endif; ?>
     <?php endif; ?>
 </div>
 

@@ -6,10 +6,8 @@ use yii\helpers\Html;
 use yii\imagine\Image;
 use Imagine\Image\Box;
 
-$this->title = 'About Us ~ Omm Meditation Centre';
+$this->title = 'About Us ~ Om Meditation Centre';
 
-//$image = Image::getImagine()->open('images/homepage.jpg');
-//$image->thumbnail(new Box(1200, 800))->save('images/homePage.jpg', ['quelity' => 90]);
 ?>
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->

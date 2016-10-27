@@ -38,12 +38,10 @@ $this->params['fluid'] = true;
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
             <?= Alert::widget() ?>
-
-            <span id="finished-courses"></span>
+            
             <div class="col-lg-10" id="body" style="margin-bottom: 30px">
                     <h1>
                         <?= Html::encode($this->title) ?>
-                        <a href="#finished-courses" class="hashlink"><i class="glyphicon glyphicon-link"></i></a>
                     </h1>
                 <br>
                 <br>
@@ -109,13 +107,6 @@ $this->params['fluid'] = true;
                         ]
                     ]
                 ]) ?>
-            </div>
-            <span id="report"></span>
-            <div class="col-lg-10" id="body">
-                <h1>
-                    <?= Html::encode('Reports') ?>
-                    <a href="#finished-courses" class="hashlink"><i class="glyphicon glyphicon-link"></i></a>
-                </h1>
             </div>
         </div><!-- user-enrollment -->
     </div>
